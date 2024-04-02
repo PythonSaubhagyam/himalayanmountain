@@ -1133,7 +1133,7 @@ export default function Navbar() {
                       {megaCategories?.map((section, index) => (
                         <>
                           <MenuItem
-                            icon={<img src={"./himalayan_logo.jpg"} width={25} alt="" />}
+                           
                             fontSize={"14"}
                             key={index}
                             onMouseEnter={() => handleShow1(section.children)}
