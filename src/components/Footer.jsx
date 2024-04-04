@@ -84,8 +84,15 @@ export default function Footer() {
             {/* <Stack align={"flex-start"} color="brand.900"> */}
 
             {/* <SimpleGrid columns={{ base: 1, md: 3 }}> */}
-            <Stack align={"flex-start"} color="text.300">
-              <ListHeader style={{ color: "#436131" }}>Quick Links</ListHeader>
+            <Stack color="text.300">
+              <Stack
+                ml={{ md: "50%" }}
+                align={{ md: "flex-start", base: "center" }}
+              >
+                <ListHeader style={{ color: "text.500" }}>
+                  Quick Links
+                </ListHeader>
+              </Stack>
               <Link
                 textDecoration="none"
                 _hover={{ color: "text.500" }}
@@ -111,24 +118,6 @@ export default function Footer() {
                 About Us
               </Link>
               <Link
-                        textDecoration="none"
-                        _hover={{ color: "text.500" }}
-                        as={RouterLink}
-                       
-                        to={"/store-locator"}
-                      >
-                        store Locate
-                      </Link>
-                      <Link
-                        textDecoration="none"
-                        _hover={{ color: "text.500" }}
-                        as={RouterLink}
-                      
-                        to={"/contact-us"}
-                      >
-                        Contact Us
-                      </Link>
-              {/* <Link
                 textDecoration="none"
                 _hover={{ color: "text.500" }}
                 as={RouterLink}
@@ -159,7 +148,7 @@ export default function Footer() {
                 to={"/testimonials"}
               >
                 Testimonials
-              </Link> */}
+              </Link>
             </Stack>
             <Stack align={"flex-start"} color="text.300">
               {!isMobile && <ListHeader>&nbsp;</ListHeader>}
@@ -191,7 +180,24 @@ export default function Footer() {
                       flexDirection={"column"}
                     >
                       {!isMobile && <ListHeader>&nbsp;</ListHeader>}
-                    
+                      <Link
+                        textDecoration="none"
+                        _hover={{ color: "text.500" }}
+                        as={RouterLink}
+                        marginTop={2}
+                        to={"/store-locator"}
+                      >
+                        Store Locate
+                      </Link>
+                      <Link
+                        textDecoration="none"
+                        _hover={{ color: "text.500" }}
+                        as={RouterLink}
+                        marginTop={2}
+                        to={"/contact-us"}
+                      >
+                        Contact Us
+                      </Link>
                       <Link
                         textDecoration="none"
                         _hover={{ color: "text.500" }}
@@ -241,13 +247,13 @@ export default function Footer() {
                   </>
                 ) : (
                   <>
-                    {/* <Link
+                    <Link
                       textDecoration="none"
                       _hover={{ color: "text.500" }}
                       as={RouterLink}
                       to={"/store-locator"}
                     >
-                      Store Locate
+                      Store Locator
                     </Link>
                     <Link
                       textDecoration="none"
@@ -256,7 +262,7 @@ export default function Footer() {
                       to={"/contact-us"}
                     >
                       Contact Us
-                    </Link> */}
+                    </Link>
                     <Link
                       textDecoration="none"
                       _hover={{ color: "text.500" }}
@@ -303,8 +309,8 @@ export default function Footer() {
             </Stack>
             {/* </SimpleGrid> */}
             {/* </Stack> */}
-            {/* <Stack color="text.300" mt={{ md: 3 }}> */}
-              {/* <Stack>
+            {/* <Stack color="text.300" mt={{ md: 3 }}>
+              <Stack>
                 <ListHeader gap={"3"}>Partner With Us</ListHeader>
                 <Link
                   textDecoration="none"
@@ -316,7 +322,7 @@ export default function Footer() {
                   SOSE - Franchise
                 </Link>
               </Stack> */}
-              {/* <Stack>
+            {/* <Stack>
                 <ListHeader>Connect With Us</ListHeader>
                 <Flex
                   gap="3"
@@ -361,8 +367,10 @@ export default function Footer() {
                 </Flex>
               </Stack> */}
             {/* </Stack> */}
-            <Stack align={"flex-start"} color="text.300" mt={{ md: 3 }}>
-              <ListHeader align={"flex-start"}>Customer Support</ListHeader>
+            <Stack color="text.300" mt={{ md: 3 }}>
+              <Stack align={{ md: "flex-start", base: "center" }}>
+                <ListHeader gap={"3"}>Customer Support</ListHeader>
+              </Stack>
               <Link
                 textDecoration="none"
                 _hover={{ color: "text.500" }}
@@ -395,8 +403,8 @@ export default function Footer() {
                 care@suryanorganic.com
               </Link>
             </Stack>
-            <Stack mt={{ md: 3 }} align={"center"}>
-              <ListHeader align={"flex-start"}>Talk To Our Vaidya</ListHeader>
+            <Stack align={"center"} mt={{ md: 3 }}>
+              {/* <ListHeader align={"flex-start"}>Talk To Our Vaidya</ListHeader>
               <Link
                 textDecoration="none"
                 _hover={{ color: "text.500" }}
@@ -420,14 +428,18 @@ export default function Footer() {
               >
                 <FaPhoneAlt size={16} style={{ marginRight: 8 }} />
                 +91 6351 9797 12
-              </Link>
+              </Link> */}
               {/* </Stack>
 
             <Stack align={"flex-start"} gap={"3"} ml={{ lg: 10 }} color="brand.900"> */}
               <ListHeader align={"flex-start"} marginBottom={5}>
                 We Accepts Payments via
               </ListHeader>
-              <Image src={"https://forntend-bucket.s3.ap-south-1.amazonaws.com/sose/images/footer/payment method.png hnghngh.png"} />
+              <Image
+                src={
+                  "https://forntend-bucket.s3.ap-south-1.amazonaws.com/sose/images/footer/payment method.png hnghngh.png"
+                }
+              />
               {/* <ListHeader>Download App</ListHeader>
               <Link
                 target="blank"
