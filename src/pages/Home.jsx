@@ -35,90 +35,93 @@ import { useNavigate, NavLink as RouterLink } from "react-router-dom";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import Testimonials from "../components/testimonials";
 
-const NaturalTea=[
-   {
-    id:1,
-    image:require("../assets/home/no-color.jpg"),
-    title:"No Chemical / No Color"
-   },
-   {
-    id:2,
-    image:require("../assets/home/friendly.jpg"),
-    title:"Environment Friendly"
-   },
-   {
-    id:3,
-    image:require("../assets/home/mental_health.jpg"),
-    title:"Relaxation & Mental HealthColor "
-   },
-   {
-    id:4,
-    image:require("../assets/home/safest.jpg"),
-    title:"The Safest Choice"
-   },
-   {
-    id:5,
-    image:require("../assets/home/good.jpg"),
-    title:"Good For Digestive system"
-   },
-   {
-    id:6,
-    image:require("../assets/home/weight_loss.jpg"),
-    title:"Helps in Weight Loss"
-   },
-   {
-    id:7,
-    image:require("../assets/home/better.jpg"),
-    title:"Better Taste"
-   },
-   {
-    id:8,
-    image:require("../assets/home/blood_sugar.jpg"),
-    title:"Best For Blood Sugar"
-   }
-
-]
+const NaturalTea = [
+  {
+    id: 1,
+    image: require("../assets/home/no-color.jpg"),
+    title: "No Chemical / No Color",
+  },
+  {
+    id: 2,
+    image: require("../assets/home/friendly.jpg"),
+    title: "Environment Friendly",
+  },
+  {
+    id: 3,
+    image: require("../assets/home/mental_health.jpg"),
+    title: "Relaxation & Mental HealthColor ",
+  },
+  {
+    id: 4,
+    image: require("../assets/home/safest.jpg"),
+    title: "The Safest Choice",
+  },
+  {
+    id: 5,
+    image: require("../assets/home/good.jpg"),
+    title: "Good For Digestive system",
+  },
+  {
+    id: 6,
+    image: require("../assets/home/weight_loss.jpg"),
+    title: "Helps in Weight Loss",
+  },
+  {
+    id: 7,
+    image: require("../assets/home/better.jpg"),
+    title: "Better Taste",
+  },
+  {
+    id: 8,
+    image: require("../assets/home/blood_sugar.jpg"),
+    title: "Best For Blood Sugar",
+  },
+];
 
 const Details = [
   {
-    id:1,
-    title:"Since 2010",
-    content:"We have a legacy of serving mankind with the wonders of Mother Nature and Ayurveda since 2010.",
-    image:require("../assets/home/since 2015.jpg")
+    id: 1,
+    title: "Since 2010",
+    content:
+      "We have a legacy of serving mankind with the wonders of Mother Nature and Ayurveda since 2010.",
+    image: require("../assets/home/since 2015.jpg"),
   },
   {
-    id:2,
-    title:"Quality Herbal Product",
-    content:"Products of Himalayan Mountain are developed at DSIR Recognized Dedicated R&D Centre",
-    image:require("../assets/home/Quality herbal product.jpg")
+    id: 2,
+    title: "Quality Herbal Product",
+    content:
+      "Products of Himalayan Mountain are developed at DSIR Recognized Dedicated R&D Centre",
+    image: require("../assets/home/Quality herbal product.jpg"),
   },
   {
-    id:3,
-    title:"Made in Bharat (India)",
-    content:"Suryan Organic is an Indian Company, serving across the globe with the invaluable treasures of Indian Traditional Science.",
-    image:require("../assets/home/made in india.jpg")
+    id: 3,
+    title: "Made in Bharat (India)",
+    content:
+      "Suryan Organic is an Indian Company, serving across the globe with the invaluable treasures of Indian Traditional Science.",
+    image: require("../assets/home/made in india.jpg"),
   },
   {
-    id:4,
-    title:"Inspired By Ayurveda",
-    content:"Ayurvedic philosophy states that health and wellness depend on a delicate balance between the mind, body, and spirit. This holistic approach of Ayurveda inspires us to serve the humanity.",
-    image:require("../assets/home/inspired by ayurveda.jpg")
+    id: 4,
+    title: "Inspired By Ayurveda",
+    content:
+      "Ayurvedic philosophy states that health and wellness depend on a delicate balance between the mind, body, and spirit. This holistic approach of Ayurveda inspires us to serve the humanity.",
+    image: require("../assets/home/inspired by ayurveda.jpg"),
   },
   {
-    id:5,
-    title:"Available in 30+ Countries",
-    content:"Serving worldwide with the traditional wisdom of Ayurevda in scientific manner across 5+ countries",
-    image:require("../assets/home/avialble in 10+contries.jpg")
+    id: 5,
+    title: "Available in 30+ Countries",
+    content:
+      "Serving worldwide with the traditional wisdom of Ayurevda in scientific manner across 5+ countries",
+    image: require("../assets/home/avialble in 10+contries.jpg"),
   },
   {
-    id:6,
-    title:"Infused With Natural Ingredients",
-    content:"Mother nature is a treasure with many different ways to maintain our health & wellness. Thus, we count on natural active ingredients for our quality products.",
-    image:require("../assets/home/natural ingredient.jpg")
+    id: 6,
+    title: "Infused With Natural Ingredients",
+    content:
+      "Mother nature is a treasure with many different ways to maintain our health & wellness. Thus, we count on natural active ingredients for our quality products.",
+    image: require("../assets/home/natural ingredient.jpg"),
   },
-]
-
-
+];
 
 const Licences = [
   {
@@ -132,6 +135,7 @@ const Licences = [
   {
     src: require("../assets/Home/tea_board.jpg"),
     alt: "Vama Herbal",
+    size:150
   },
   {
     src: require("../assets/Home/fassai 2.png"),
@@ -141,34 +145,32 @@ const Licences = [
     src: require("../assets/Home/spices board.jpg"),
     alt: "Spices Board",
   },
-  
- 
+
   {
     src: require("../assets/Home/lPCR_logo.jpg"),
     alt: "Shishu veda",
   },
-  
 ];
 const imageInfo = [
   {
-    src:require("../assets/home/gmo-icon.png"),
+    src: require("../assets/home/gmo-icon.png"),
     name: "NON-GMO Product",
   },
   {
-    src:require("../assets/home/natural.png"),
+    src: require("../assets/home/natural.png"),
     name: "Ethical & Natural",
   },
- 
+
   {
-    src:require("../assets/home/quality.png"),
+    src: require("../assets/home/quality.png"),
     name: "Quality you'll Love Guaranteed",
   },
   {
-    src:require("../assets/home/order.png"),
+    src: require("../assets/home/order.png"),
     name: "Minimum Order Value Rs.250",
   },
   {
-    src:require("../assets/home/best.png"),
+    src: require("../assets/home/best.png"),
     name: "Best Service",
   },
 ];
@@ -178,14 +180,14 @@ const banner = [
     alt_text: "Image2",
     image: require("../assets/Home Page Banners/01.jpg"),
     display_status: true,
-    image_url:"/products/1554",
+    image_url: "/products/1554",
   },
   {
     id: 12,
     alt_text: "Image3",
     image: require("../assets/Home Page Banners/02.jpg"),
     display_status: true,
-    image_url:"/products/1555",
+    image_url: "/products/1555",
   },
   {
     id: 13,
@@ -199,14 +201,14 @@ const banner = [
     alt_text: "Image3",
     image: require("../assets/Home Page Banners/04.jpg"),
     display_status: true,
-    image_url:"/products/1562",
+    image_url: "/products/1562",
   },
   {
     id: 15,
     alt_text: "Image3",
     image: require("../assets/Home Page Banners/05.jpg"),
     display_status: true,
-    image_url:"/products/1556",
+    image_url: "/products/1556",
   },
 ];
 const ourFeaturedProduct = [
@@ -216,9 +218,6 @@ const ourFeaturedProduct = [
   { id: 1557, image1: require("../assets/home/lemon_grass_chai.jpg") },
 ];
 
-
-
-
 export default function Home() {
   const [isFullScreen] = useMediaQuery("(min-width: 768px)");
   const width = useBreakpointValue({ base: "100%", lg: "100%" });
@@ -226,10 +225,9 @@ export default function Home() {
   const [banners, setBanners] = useState(banner);
   const [loading, setLoading] = useState(true);
   const [isMobile] = useMediaQuery("(max-width: 480px)");
-  const [newArrival ,setNewArrival] = useState([])
-  const [mustTry ,setMustTry] = useState([])
-  const [bestSeller , setBestSeller] = useState([])
-
+  const [newArrival, setNewArrival] = useState([]);
+  const [mustTry, setMustTry] = useState([]);
+  const [bestSeller, setBestSeller] = useState([]);
 
   // let [isFull] = useMediaQuery("(max-width:1920px)");
   const [blogs, setBlogs] = useState([]);
@@ -239,32 +237,32 @@ export default function Home() {
   useEffect(() => {
     CheckOrSetUDID();
     getMustTry();
-    getBestSeller()
-    getNewArrival()
+    getBestSeller();
+    getNewArrival();
     getBlogs();
   }, []);
   async function getNewArrival() {
     const response = await client.get("newarrival/list");
     if (response) {
-      setNewArrival(response.data.data)
+      setNewArrival(response.data.data);
     }
     setLoading(false);
   }
   async function getMustTry() {
     const response = await client.get("musttry/list");
     if (response) {
-      setMustTry(response.data.data)
+      setMustTry(response.data.data);
     }
     setLoading(false);
   }
   async function getBestSeller() {
     const response = await client.get("bestofalltime/list");
     if (response) {
-      setBestSeller(response.data.data)
+      setBestSeller(response.data.data);
     }
     setLoading(false);
   }
- 
+
   async function getBlogs() {
     const params = {};
     const response = await client.get("/home/blogs/", {
@@ -292,21 +290,18 @@ export default function Home() {
         )}
       </Container>
 
-      <Container maxW={"container.xl"} mb={8} mt={2} px={0}>
+      <Container maxW={"8xl"} mb={8} mt={2} centerContent>
         <Grid
           templateColumns={{
             md: "repeat(3, 1fr)",
             base: "repeat(1, 1fr)",
           }}
-          gap={5}
+          gap={2}
           my={4}
-          mx={7}
         >
-          <GridItem colSpan={1} py={20}>
+          <GridItem colSpan={1}>
             <Image
               src={require("../assets/home/left himalayan mountain about.jpg")}
-              w={"75%"}
-              ml={20}
             />
           </GridItem>
           <GridItem px={{ base: 15, lg: 20 }} colSpan={2}>
@@ -318,7 +313,7 @@ export default function Home() {
               px={{ base: 2, md: 8 }}
               py={4}
             >
-             About Himalayan Mountain
+              About Himalayan Mountain
             </Text>
             <Text
               color={"text.300"}
@@ -363,30 +358,29 @@ export default function Home() {
 
       <Container mb={5} px={0} maxW={"container.xl"} centerContent>
         <LazyLoadImage
-          src={
-            "https://forntend-bucket.s3.ap-south-1.amazonaws.com/sose/images/03.jpg"
-          }
-          
-          
+          src={require("../assets/home/himalayan.jpg")}
           alt=""
           style={{
             opacity: 1,
             transition: "opacity 0.7s", // Note the corrected syntax here
-            
           }}
         />
       </Container>
 
       <Container maxW={"container.xl"} px={0}>
-        <Image src={require("../assets/home/gree tea.jpg")} onClick={()=>navigate("/products/1554")} cursor={"pointer"} />
+        <Image
+          src={require("../assets/home/gree tea.jpg")}
+          onClick={() => navigate("/products/1554")}
+          cursor={"pointer"}
+        />
       </Container>
       <Container maxW={"container.xl"} py={5} px={0}>
-      <Text
-           fontSize={{ base: "xl", sm: "2xl", xl: "3xl" }}
+        <Text
+          fontSize={{ base: "xl", sm: "2xl", xl: "3xl" }}
           color={"brand.500"}
           textAlign={{ base: "center", md: "start" }}
           mb={10}
-          bgColor={"#E6E6E6"}
+          bgColor={"bg.500"}
           px={{ base: 2, md: 8 }}
           py={4}
         >
@@ -400,26 +394,29 @@ export default function Home() {
           gap={5}
           my={4}
           px={20}
-         
         >
           {ourFeaturedProduct.map((data) => (
             <GridItem>
-              <Image src={data.image1} onClick={()=>navigate(`/products/${data.id}`)} cursor={"pointer"} />
+              <Image
+                src={data.image1}
+                onClick={() => navigate(`/products/${data.id}`)}
+                cursor={"pointer"}
+              />
             </GridItem>
           ))}
         </Grid>
       </Container>
       <Container maxW={"container.xl"} py={5} px={0}>
         <Text
-           fontSize={{ base: "xl", sm: "2xl", xl: "3xl" }}
+          fontSize={{ base: "xl", sm: "2xl", xl: "3xl" }}
           color={"brand.500"}
           textAlign={{ base: "center", md: "start" }}
           mb={10}
-          bgColor={"#E6E6E6"}
+          bgColor={"bg.500"}
           px={{ base: 2, md: 8 }}
           py={4}
         >
-         Reasons to Buy Ethical & Natural Tea
+          Reasons to Buy Ethical & Natural Tea
         </Text>
         <Grid
           templateColumns={{
@@ -432,40 +429,46 @@ export default function Home() {
         >
           {NaturalTea.map((data) => (
             <GridItem>
-              <Flex flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>
-              <Image  src={data.image} w={"40%"} />
-              <Text>{data.title}</Text>
+              <Flex
+                flexDirection={"column"}
+                alignItems={"center"}
+                justifyContent={"center"}
+              >
+                <Image src={data.image} w={"40%"} />
+                <Text>{data.title}</Text>
               </Flex>
             </GridItem>
           ))}
         </Grid>
       </Container>
 
-     
-
       <ProductListSectionHome
-        title="New Arrival"
+        title="New Arrivals"
         loading={loading}
         products={newArrival}
       />
 
       <ProductListSectionHome
-        title="Must Try : Himalayan Mountain Products"
+        title="Must Try: Himalayan Mountain Products"
         loading={loading}
         products={mustTry}
       />
-       <ProductListSectionHome
-        title="Best Seller Of All Time"
+      <ProductListSectionHome
+        title="All Time Best Sellers"
         loading={loading}
         products={bestSeller}
       />
 
-      <Container maxW={"container.xl"} px={"12%"} centerContent>
-       <Image src={require("../assets/home/Apple_cider.jpg")} onClick={()=>navigate("/products/1550")} cursor={"pointer"} />
+      <Container maxW={"8xl"} centerContent>
+        <Image
+          src={require("../assets/home/Apple_cider.jpg")}
+          onClick={() => navigate("/products/1550")}
+          cursor={"pointer"}
+        />
       </Container>
       <Container maxW={"container.xl"} px={0} py={6} centerContent>
-       <Image src={require("../assets/home/perfect_tea.jpg")} />
-       <Grid
+        <Image src={require("../assets/home/perfect_tea.jpg")} />
+        <Grid
           templateColumns={{
             md: "repeat(3, 1fr)",
             base: "repeat(1, 1fr)",
@@ -476,28 +479,36 @@ export default function Home() {
         >
           {Details.map((data) => (
             <GridItem>
-              <Flex gap={3} flexDirection={"column"} alignItems={"start"} justifyContent={"center"}>
-              <Image  src={data.image} w={100} />
-             
-              <Text color={"brand.500"} fontWeight={600} fontSize={"22px"}>{data.title}</Text>
-              <Text textAlign={"justify"} fontSize={"16px"} color={"text.300"}>{data.content}</Text>
+              <Flex
+                gap={3}
+                flexDirection={"column"}
+                alignItems={"start"}
+                justifyContent={"center"}
+              >
+                <Image src={data.image} w={100} />
+
+                <Text color={"brand.500"} fontWeight={600} fontSize={"22px"}>
+                  {data.title}
+                </Text>
+                <Text
+                  textAlign={"justify"}
+                  fontSize={"16px"}
+                  color={"text.300"}
+                >
+                  {data.content}
+                </Text>
               </Flex>
             </GridItem>
           ))}
         </Grid>
-
       </Container>
-     
-    
-   
-      
-      <Container  bgColor={"#E6E6E6"} maxW={"container.xl"} py={2}>
+
+      <Container bgColor={"#E6E6E6"} maxW={"container.xl"} py={2}>
         <SimpleGrid
           columns={[2, 3, null, 6]}
           px={6}
           maxW={"container.xl"}
           my={6}
-          
           align="center"
           spacingX={{ base: "10vw", md: "30px" }}
           spacingY="40px"
@@ -511,14 +522,14 @@ export default function Home() {
 
           <Stat>
             <StatNumber color="text.500" fontSize={{ base: "3xl", md: "3xl" }}>
-            10258+
+              10258+
             </StatNumber>
             <StatHelpText color="gray.600">Satisfied Clients</StatHelpText>
           </Stat>
 
           <Stat>
             <StatNumber color="text.500" fontSize={{ base: "3xl", md: "3xl" }}>
-            1485+
+              1485+
             </StatNumber>
             <StatHelpText color="gray.600">Cities & Towns</StatHelpText>
           </Stat>
@@ -531,7 +542,7 @@ export default function Home() {
 
           <Stat>
             <StatNumber color="text.500" fontSize={{ base: "3xl", md: "3xl" }}>
-            15+
+              15+
             </StatNumber>
             <StatHelpText color="gray.600">Stores</StatHelpText>
           </Stat>
@@ -607,19 +618,19 @@ export default function Home() {
         >
           <Heading
             color="brand.500"
-            size="lg"
+            fontSize={{md:33,base:24}}
             mx="auto"
             align={"center"}
             mt={8}
             mb={1}
             pb={"10px"}
           >
-           Awards & Certificates
+            AWARDS & CERTIFICATES
           </Heading>
         </Box>
         <Text mb={5} textAlign={"center"} color="text.300">
-          We are committed to quality and each of our facility is independently
-          certified by an industry-accredited agency.
+          We are committed to quality and each of our facilities is
+          independently certified by an industry-accredited agency.
         </Text>
         <Flex
           justifyContent="space-evenly"
@@ -658,39 +669,39 @@ export default function Home() {
         >
           <Heading
             color="brand.500"
-            size="lg"
+            fontSize={{md:33,base:24}}
             mx="auto"
             align={"center"}
-            mb={"5"}
-            pb={"10px"}
+            my={"5"}
+            
           >
-            LICENCES & AFFILIATION
+            LICENSES & AFFILIATIONS
           </Heading>
         </Box>
         <Grid
           templateColumns={{
             base: "repeat(1, 1fr)",
             md: "repeat(6, 1fr)",
+            lg: "repeat(6, 1fr)",
           }}
           gap={6}
-          my={10}
-          px={"11%"}
+          mb={10}
+          px={{md:"11%"}}
+          alignItems={"center"}
         >
-          {Licences.map((data)=>(
+          {Licences.map((data) => (
             <GridItem>
-              <Image src={data.src} />
+              <Image mx={"auto"} boxSize={data.size} src={data.src} />
             </GridItem>
           ))}
-          </Grid>
-     
-       
-        <Grid
+        </Grid>
+
+        {/* <Grid
           templateColumns={{
             base: "repeat(3, 1fr)",
             md: "repeat(3, 1fr)",
             lg: "repeat(5,1fr)",
           }}
-         
           my={6}
           mx={{ md: "15%", base: 3 }}
         >
@@ -722,7 +733,11 @@ export default function Home() {
               </Flex>
             </GridItem>
           ))}
-        </Grid>
+        </Grid> */}
+        <Container maxW={"container.xl"} pt={15} pb={20} centerContent>
+          <Image w={"70%"} src={require("../assets/home/himalayan_icon.jpg")} />
+
+        </Container>
         <Box
           w="100%"
           backgroundSize="100%"
@@ -734,8 +749,7 @@ export default function Home() {
             size="lg"
             mx="auto"
             align={"center"}
-            my={"5"}
-            pb={"10px"}
+            mb={7}
           >
             SERVING TO THE COUNTRIES
           </Heading>
@@ -756,7 +770,6 @@ export default function Home() {
         </Box>
         <Box
           w="100%"
-        
           backgroundSize="100%"
           backgroundPosition="50% 100%"
           backgroundRepeat={"no-repeat"}
