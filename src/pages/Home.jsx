@@ -304,9 +304,9 @@ export default function Home() {
           gap={2}
           my={4}
         >
-          <GridItem colSpan={1}>
+          <GridItem colSpan={1}  >
             <Image
-              w={{base:"70%"}}
+              w={{base:"70%",md:"100%"}}
               mx={{base:"auto"}}
               src={require("../assets/home/left himalayan mountain about.jpg")}
             />
@@ -742,7 +742,7 @@ export default function Home() {
           ))}
         </Grid> */}
         <Container maxW={"container.xl"} pt={15} pb={20} centerContent>
-          <Image w={"65%"} src={require("../assets/home/himalayan_icon.jpg")} />
+          <Image w={{md:"65%"}} src={require("../assets/home/himalayan_icon.jpg")} />
 
         </Container>
         <Box
