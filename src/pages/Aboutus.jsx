@@ -31,7 +31,7 @@ const Aboutus = () => {
             Our Mission & Vision
           </Box>
 
-          <Box maxW={"6xl"} color={"text.300"} textAlign={"justify"}>
+          <Box maxW={"6xl"} color={"text.300"} textAlign={"justify"} px={{base:9}}>
             When you buy this blend , you also support ethical farming
             practices, and farmers who work hard under tough hilly or
             mountainous conditions to bring you authentic products without
@@ -79,6 +79,7 @@ const Aboutus = () => {
             maxW={"6xl"}
             fontWeight={"600"}
             color="text.500"
+            px={{base:9}}
             fontSize={{ base: "20px", lg: "32px" }}
           >
             How Is Himalayan Mountain Tea Produced?

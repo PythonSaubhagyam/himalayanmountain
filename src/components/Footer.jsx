@@ -55,8 +55,8 @@ export default function Footer() {
             fontSize={{ base: "sm", lg: "md" }}
             className="scrolling-text"
           >
-            For Deliveries in America, Canada, Europe, UAE, Singapore, etc Email
-            us on
+            For deliveries in the USA, UAE, UK, Singapore, Canada and Australia,
+            email us at{" "}
             <Link
               target="_blank"
               href="mailto:export@suryanorganic.com"
@@ -65,7 +65,7 @@ export default function Footer() {
             >
               export@suryanorganic.com
             </Link>{" "}
-            or Whatsapp on{" "}
+            or WhatsApp us at{" "}
             <Link
               target="_blank"
               href="https://wa.me/+916354800089?text=Hello%2C%20this%20is%20a%20test%20message"
@@ -121,33 +121,19 @@ export default function Footer() {
                 textDecoration="none"
                 _hover={{ color: "text.500" }}
                 as={RouterLink}
-                to={"/organic-living"}
+                
+                to={"/store-locator"}
               >
-                Organic Living
+                Store Locator
               </Link>
               <Link
                 textDecoration="none"
                 _hover={{ color: "text.500" }}
                 as={RouterLink}
-                to={"/resources"}
+                
+                to={"/contact-us"}
               >
-                Resources
-              </Link>
-              <Link
-                textDecoration="none"
-                _hover={{ color: "text.500" }}
-                as={RouterLink}
-                to={"/appreciation"}
-              >
-                Appreciation
-              </Link>
-              <Link
-                textDecoration="none"
-                _hover={{ color: "text.500" }}
-                as={RouterLink}
-                to={"/testimonials"}
-              >
-                Testimonials
+                Contact Us
               </Link>
             </Stack>
             <Stack align={"flex-start"} color="text.300">
@@ -169,100 +155,8 @@ export default function Footer() {
                 Contact Us
               </Link> */}
 
-              <>
-                {isMobiles ? (
-                  <>
-                    <Grid
-                      align={"flex"}
-                      position={"absolute"}
-                      marginTop={"-220px"}
-                      marginLeft={"140px"}
-                      flexDirection={"column"}
-                    >
-                      {!isMobile && <ListHeader>&nbsp;</ListHeader>}
-                      <Link
-                        textDecoration="none"
-                        _hover={{ color: "text.500" }}
-                        as={RouterLink}
-                        marginTop={2}
-                        to={"/store-locator"}
-                      >
-                        Store Locate
-                      </Link>
-                      <Link
-                        textDecoration="none"
-                        _hover={{ color: "text.500" }}
-                        as={RouterLink}
-                        marginTop={2}
-                        to={"/contact-us"}
-                      >
-                        Contact Us
-                      </Link>
-                      <Link
-                        textDecoration="none"
-                        _hover={{ color: "text.500" }}
-                        as={RouterLink}
-                        marginTop={2}
-                        to={"/faq"}
-                      >
-                        FAQ
-                      </Link>
-                      <Link
-                        textDecoration="none"
-                        _hover={{ color: "text.500" }}
-                        as={RouterLink}
-                        marginTop={2}
-                        to={"/terms-and-conditions"}
-                      >
-                        Terms & Conditions
-                      </Link>
-                      <Link
-                        textDecoration="none"
-                        _hover={{ color: "text.500" }}
-                        as={RouterLink}
-                        marginTop={2}
-                        to={"/shipping-policy"}
-                      >
-                        Shipping Policy
-                      </Link>
-                      <Link
-                        textDecoration="none"
-                        _hover={{ color: "text.500" }}
-                        as={RouterLink}
-                        marginTop={2}
-                        to={"/return-and-refund-policy"}
-                      >
-                        Return & Refund Policy
-                      </Link>
-                      <Link
-                        textDecoration="none"
-                        _hover={{ color: "text.500" }}
-                        as={RouterLink}
-                        marginTop={2}
-                        to={"/inspire-and-support"}
-                      >
-                        Inspire & Support
-                      </Link>
-                    </Grid>
-                  </>
-                ) : (
-                  <>
-                    <Link
-                      textDecoration="none"
-                      _hover={{ color: "text.500" }}
-                      as={RouterLink}
-                      to={"/store-locator"}
-                    >
-                      Store Locator
-                    </Link>
-                    <Link
-                      textDecoration="none"
-                      _hover={{ color: "text.500" }}
-                      as={RouterLink}
-                      to={"/contact-us"}
-                    >
-                      Contact Us
-                    </Link>
+             
+                  
                     <Link
                       textDecoration="none"
                       _hover={{ color: "text.500" }}
@@ -303,9 +197,7 @@ export default function Footer() {
                     >
                       Inspire & Support
                     </Link>
-                  </>
-                )}
-              </>
+                 
             </Stack>
             {/* </SimpleGrid> */}
             {/* </Stack> */}
@@ -368,7 +260,7 @@ export default function Footer() {
               </Stack> */}
             {/* </Stack> */}
             <Stack color="text.300" mt={{ md: 3 }}>
-              <Stack align={{ md: "flex-start", base: "center" }}>
+              <Stack align={"flex-start"}>
                 <ListHeader gap={"3"}>Customer Support</ListHeader>
               </Stack>
               <Link
@@ -403,7 +295,7 @@ export default function Footer() {
                 care@suryanorganic.com
               </Link>
             </Stack>
-            <Stack align={"center"} mt={{ md: 3 }}>
+            <Stack  mt={{ md: 3 }}>
               {/* <ListHeader align={"flex-start"}>Talk To Our Vaidya</ListHeader>
               <Link
                 textDecoration="none"
@@ -432,10 +324,13 @@ export default function Footer() {
               {/* </Stack>
 
             <Stack align={"flex-start"} gap={"3"} ml={{ lg: 10 }} color="brand.900"> */}
+            <Stack ml={{lg:5,md:"-8px"}}>
               <ListHeader align={"flex-start"} marginBottom={5}>
-                We Accepts Payments via
+              We accept payments via
               </ListHeader>
+              </Stack>
               <Image
+                ml={{lg:0,md:"-22px",base:"-22px"}}
                 src={
                   "https://forntend-bucket.s3.ap-south-1.amazonaws.com/sose/images/footer/payment method.png hnghngh.png"
                 }

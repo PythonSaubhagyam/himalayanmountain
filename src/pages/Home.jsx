@@ -127,28 +127,33 @@ const Licences = [
   {
     src: require("../assets/Home/apeda.jpg"),
     alt: "Gir Gauveda",
+    size:180
   },
   {
     src: require("../assets/Home/msme.jpg"),
     alt: "Himalayan Mountain",
+    size:180
   },
   {
-    src: require("../assets/Home/tea_board.jpg"),
+    src: require("../assets/Home/tea_board_1.jpg"),
     alt: "Vama Herbal",
-    size:150
+   
   },
   {
     src: require("../assets/Home/fassai 2.png"),
     alt: "CoffeeCo",
+    size:190
   },
   {
     src: require("../assets/Home/spices board.jpg"),
     alt: "Spices Board",
+    size:190
   },
 
   {
     src: require("../assets/Home/lPCR_logo.jpg"),
     alt: "Shishu veda",
+    size:150
   },
 ];
 const imageInfo = [
@@ -228,7 +233,7 @@ export default function Home() {
   const [newArrival, setNewArrival] = useState([]);
   const [mustTry, setMustTry] = useState([]);
   const [bestSeller, setBestSeller] = useState([]);
-
+ 
   // let [isFull] = useMediaQuery("(max-width:1920px)");
   const [blogs, setBlogs] = useState([]);
   const isMobiles = width <= 768;
@@ -301,6 +306,8 @@ export default function Home() {
         >
           <GridItem colSpan={1}>
             <Image
+              w={{base:"70%"}}
+              mx={{base:"auto"}}
               src={require("../assets/home/left himalayan mountain about.jpg")}
             />
           </GridItem>
@@ -691,7 +698,7 @@ export default function Home() {
         >
           {Licences.map((data) => (
             <GridItem>
-              <Image mx={"auto"} boxSize={data.size} src={data.src} />
+              <Image mx={"auto"} src={data.src} />
             </GridItem>
           ))}
         </Grid>
@@ -735,7 +742,7 @@ export default function Home() {
           ))}
         </Grid> */}
         <Container maxW={"container.xl"} pt={15} pb={20} centerContent>
-          <Image w={"70%"} src={require("../assets/home/himalayan_icon.jpg")} />
+          <Image w={"65%"} src={require("../assets/home/himalayan_icon.jpg")} />
 
         </Container>
         <Box
@@ -751,7 +758,7 @@ export default function Home() {
             align={"center"}
             mb={7}
           >
-            SERVING TO THE COUNTRIES
+            OUR SERVICES ARE AVAILABLE IN
           </Heading>
         </Box>
         <Box display={"flex"} justifyContent={"center"}>
