@@ -95,7 +95,7 @@ const Links = [
     location: "/consult-our-vaidya",
   },
   {
-    name: "Store Locate",
+    name: "Store Locator",
     location: "/store-locator",
   },
   {

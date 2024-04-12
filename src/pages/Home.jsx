@@ -137,6 +137,7 @@ const Licences = [
   {
     src: require("../assets/Home/tea_board_1.jpg"),
     alt: "Vama Herbal",
+    size:110
    
   },
   {
@@ -147,13 +148,13 @@ const Licences = [
   {
     src: require("../assets/Home/spices board.jpg"),
     alt: "Spices Board",
-    size:190
+    size:160
   },
 
   {
     src: require("../assets/Home/lPCR_logo.jpg"),
     alt: "Shishu veda",
-    size:150
+    size:110
   },
 ];
 const imageInfo = [
@@ -688,7 +689,7 @@ export default function Home() {
         <Grid
           templateColumns={{
             base: "repeat(1, 1fr)",
-            md: "repeat(6, 1fr)",
+            md: "repeat(3, 1fr)",
             lg: "repeat(6, 1fr)",
           }}
           gap={6}
@@ -698,7 +699,7 @@ export default function Home() {
         >
           {Licences.map((data) => (
             <GridItem>
-              <Image mx={"auto"} src={data.src} />
+              <Image mx={"auto"} src={data.src} boxSize={{base:130,md:data.size}} />
             </GridItem>
           ))}
         </Grid>
@@ -753,7 +754,7 @@ export default function Home() {
         >
           <Heading
             color="brand.500"
-            size="lg"
+            fontSize={{md:33,base:20}}
             mx="auto"
             align={"center"}
             mb={7}
@@ -783,7 +784,7 @@ export default function Home() {
         >
           <Heading
             color="brand.500"
-            size="lg"
+            fontSize={{md:33,base:22}}
             mx="auto"
             align={"center"}
             my={"5"}
