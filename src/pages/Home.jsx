@@ -451,7 +451,7 @@ export default function Home() {
       </Container>
 
       <ProductListSectionHome
-        title="New Arrivals"
+        title="Try Our New Products"
         loading={loading}
         products={newArrival}
       />
