@@ -1106,7 +1106,7 @@ export default function Navbar() {
                 </MenuButton>
                 <MenuList
                   as={Grid}
-                  width={500}
+                  width={600}
                   //height={400}
                   templateColumns="repeat(9, 1fr)"
                   onMouseLeave={handleClose1}
