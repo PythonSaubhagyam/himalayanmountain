@@ -145,17 +145,17 @@ const Licences = [
     alt: "CoffeeCo",
     size:190
   },
-  {
-    src: require("../assets/Home/spices board.jpg"),
-    alt: "Spices Board",
-    size:160
-  },
+  // {
+  //   src: require("../assets/Home/spices board.jpg"),
+  //   alt: "Spices Board",
+  //   size:160
+  // },
 
-  {
-    src: require("../assets/Home/lPCR_logo.jpg"),
-    alt: "Shishu veda",
-    size:110
-  },
+  // {
+  //   src: require("../assets/Home/lPCR_logo.jpg"),
+  //   alt: "Shishu veda",
+  //   size:110
+  // },
 ];
 const imageInfo = [
   {
@@ -758,8 +758,8 @@ export default function Home() {
         <Grid
           templateColumns={{
             base: "repeat(1, 1fr)",
-            md: "repeat(3, 1fr)",
-            lg: "repeat(6, 1fr)",
+            md: "repeat(2, 1fr)",
+            lg: "repeat(4, 1fr)",
           }}
           gap={6}
           mb={10}
