@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import Carousel from "../components/Carousel";
 import CarouselWithLinks from "../components/CarouselWithLinks";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import ScrollToTop from "../components/ScrollToTop";
 
 import ProductListSectionHome from "../components/ProductListSectionHome";
 import {
@@ -876,6 +877,7 @@ export default function Home() {
           />
         </Container>
       </Container>
+      <ScrollToTop/>
       <Footer />
       {/* </>
       )} */}

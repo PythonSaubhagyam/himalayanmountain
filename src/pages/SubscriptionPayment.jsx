@@ -4,6 +4,7 @@ import checkLogin from "../utils/checkLogin";
 import Router from "../routes/routes";
 import Loader from "../components/Loader";
 import { Center, Box, Text } from "@chakra-ui/react";
+import ScrollToTop from "../components/ScrollToTop";
 
 function SubscriptionPayment() {
   const txnId = useRef(new Date().getTime().toString());
@@ -77,6 +78,7 @@ function SubscriptionPayment() {
           </Text>
         </Box>
       </Center>
+      <ScrollToTop/>
     </>
   );
 }
