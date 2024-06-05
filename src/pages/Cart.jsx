@@ -40,7 +40,6 @@ import checkLogin from "../utils/checkLogin";
 import BreadCrumbCom from "../components/BreadCrumbCom";
 import ScrollToTop from "../components/ScrollToTop";
 
-
 export default function Cart() {
   const messageRef = useRef(null);
   const voucherCodeRef = useRef(null);
@@ -86,6 +85,8 @@ export default function Cart() {
       setTaxes(response.data.data.gst_amt);
       setGrandTotal(response.data.data.final_total);
       localStorage.setItem("cart_counter", response.data.data.cart_counter);
+      localStorage.setItem("product_total", response.data.data.final_total);
+
       if (
         loginInfo.isLoggedIn === true &&
         response.data.data.cart_counter > 0
@@ -178,6 +179,8 @@ export default function Cart() {
         newQuantity = parseInt(newQuantity);
         if (newQuantity > 0) {
           localStorage.setItem("cart_counter", response.data.cart_counter);
+          localStorage.setItem("product_total", response.data.final_total);
+
           toast({
             title: "Quantity updated!",
             status: "success",
@@ -648,7 +651,7 @@ export default function Cart() {
           </>
         )}
       </Container>
-      <ScrollToTop/>
+      <ScrollToTop />
       <Footer />
     </>
   );
