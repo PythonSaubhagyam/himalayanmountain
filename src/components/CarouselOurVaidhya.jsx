@@ -144,7 +144,7 @@ const CarouselOurVaidhya = () => {
             <>
               <IconButton
                 aria-label="left-arrow"
-                icon={<ChevronLeftIcon style={{ fontSize: 34 }} />}
+                icon={<ChevronLeftIcon style={{ fontSize: 30 }} />}
                 background={"#ffffff00"}
                 color="#fff"
                 size={{ base: "sm", md: "md" }}
@@ -153,7 +153,7 @@ const CarouselOurVaidhya = () => {
                 top={"50%"}
                 transform={"translate(50%, -50%)"}
                 zIndex={2}
-                display={{ base: "none", md: "block" }}
+                display={{ base: "block", md: "block" }}
                 onClick={() => slider?.slickPrev()}
                 _hover={"background:#ffffff00"}
                 borderRadius={"40px"}
@@ -162,7 +162,7 @@ const CarouselOurVaidhya = () => {
               {/* Right Icon */}
               <IconButton
                 aria-label="right-arrow"
-                icon={<ChevronRightIcon style={{ fontSize: 34 }} />}
+                icon={<ChevronRightIcon style={{ fontSize: 30 }} />}
                 background={"#ffffff00"}
                 color="#fff"
                 size={{ base: "sm", md: "md" }}
@@ -171,7 +171,7 @@ const CarouselOurVaidhya = () => {
                 top={"50%"}
                 transform={"translate(-50%, -50%)"}
                 zIndex={2}
-                display={{ base: "none", md: "block" }}
+                display={{ base: "block", md: "block" }}
                 onClick={() => slider?.slickNext()}
                 _hover={"background:#ffffff00 "}
                 borderRadius={"40px"}
