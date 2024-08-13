@@ -14,7 +14,7 @@ const ProductCardHome = ({ product }) => {
     const navigate = useNavigate();
     return (
       <Card
-        w={{ base: "80vw", sm: "3xs",lg:"200px", xl: "2xs" }}
+        // w={{ base: "80vw", sm: "3xs",lg:"200px", xl: "2xs" }}
         border="1px"
         borderColor="brand.100"
         borderRadius={"lg"}

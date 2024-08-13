@@ -139,7 +139,8 @@ const ProductListSectionHome = ({ title, products, loading, type }) => {
             direction={{ base: "column", md: "row" }}
             // wrap={"wrap"}
             wrap={{ md: "wrap", lg: "nowrap" }}
-            px={5}
+            px={4}
+            gap={5}
             
           >
             {loading === true ? (

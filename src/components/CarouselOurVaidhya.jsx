@@ -104,7 +104,7 @@ const CarouselOurVaidhya = () => {
 
   return (
     <>
-      <Container bg={"gray.100"} maxW={"container.xl"} py={3}>
+      <Container bg={"gray.100"} maxW={"container.5xl"} py={3}>
         <Heading
           color="brand.500"
           fontSize={33}
@@ -118,10 +118,13 @@ const CarouselOurVaidhya = () => {
         </Heading>
 
         <Box
-          position={"relative"}
-          height={{ base: "100%", md: "50%" }}
-          width={"100vw"}
-
+         size="lg"
+         fontWeight="bold"
+         align="center"
+         pt={1}
+         pb={4}
+         // w={{ base: "75%", md: "100%" }}
+         mx={{ base: "auto", md: "0" }}
           // overflow={"hidden"}
         >
           {/* CSS files for react-slick */}
