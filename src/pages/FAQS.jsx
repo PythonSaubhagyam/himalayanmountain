@@ -4,9 +4,16 @@ import Accordion from "../components/Accordion";
 import { Container, Box, Text,Image } from "@chakra-ui/react";
 import BreadCrumbCom from "../components/BreadCrumbCom";
 import ScrollToTop from "../components/ScrollToTop";
+import { useLocation } from "react-router-dom";
+
 
 
 export default function FAQS() {
+  
+  let { search } = useLocation();
+  const searchParams = new URLSearchParams(search);
+ const IsMobileView = searchParams.get("mobile") ?? "false";
+
   const generalInformationData = [
     {
       title: "How is SOSE Organic different from other organic Products",
@@ -190,11 +197,13 @@ export default function FAQS() {
 
   return (
     <>
-      <Navbar />
+    
+    {IsMobileView !== "true" && <Navbar />}
+
       <Container maxW="container.xl">
         <BreadCrumbCom second={"FAQ"} secondUrl={"/faq"} />
       </Container>
-      <Container maxW={"container.xl"} py={8} px={0} position="relative">
+      <Container maxW={"container.xl"} py={1} px={0} position="relative">
         <Image src="https://forntend-bucket.s3.ap-south-1.amazonaws.com/sose/images/organic-living/faqs.jpg" />
 
         <Text
@@ -276,7 +285,9 @@ export default function FAQS() {
         <Accordion details={businessInquiryInformation} />
       </Container>
       <ScrollToTop/>
-      <Footer />
+      
+     {IsMobileView !== "true" && <Footer />}
+
     </>
   );
 }
