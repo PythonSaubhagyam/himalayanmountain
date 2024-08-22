@@ -49,7 +49,7 @@ export default function TermsAndConditions() {
           Terms & Condition
         </Text>
       </Container>
-      <Container maxW="container.lg" pt={10}>
+      <Container maxW="container.lg" pt={5}>
         <Heading size="md" fontWeight={500} color={"brand.900"}>
           Shipping Policy
         </Heading>
