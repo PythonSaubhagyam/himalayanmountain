@@ -75,7 +75,7 @@ export default function CarouselWithLinks({
                 <>
                     <IconButton
                         aria-label="left-arrow"
-                        icon={<ChevronLeftIcon style={{ fontSize: 34 }} />}
+                        icon={<ChevronLeftIcon style={{ fontSize: 30 }} />}
                         background={transparentBtn ? "#ffffff00" : "#434242"}
                         color="#fff"
                         size={{ base: "sm", md: "md" }}
@@ -93,7 +93,7 @@ export default function CarouselWithLinks({
                     {/* Right Icon */}
                     <IconButton
                         aria-label="right-arrow"
-                        icon={<ChevronRightIcon style={{ fontSize: 34 }} />}
+                        icon={<ChevronRightIcon style={{ fontSize: 30 }} />}
                         background={transparentBtn ? "#ffffff00" : "#434242"}
                         color="#fff"
                         size={{ base: "sm", md: "md" }}
