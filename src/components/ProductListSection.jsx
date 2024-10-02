@@ -87,7 +87,7 @@ export default function ProductListSection({ title, products, type,loading }) {
 
   return (
     <>
-      <Container maxW={"container.xl"} px={0} pt={4} pb={6}>
+      <Container maxW={"container.xl"} px={0} pb={6}>
         <Text
           fontSize={{ base: "xl", sm: "2xl", xl: "3xl" }}
           bgColor={"#E6E6E6"}
@@ -100,7 +100,7 @@ export default function ProductListSection({ title, products, type,loading }) {
         >
           {title}
         </Text>
-        {type === "carousal" && products.length > 4 ? (
+        {type === "carousal" && products && products?.length > 4 ? (
           <Slider {...settings}>
             {loading 
               ? [0, 1, 2, 3, 4].map((index) => (
@@ -122,7 +122,9 @@ export default function ProductListSection({ title, products, type,loading }) {
                   </Box>
                 ))
               : products?.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                <Box key={product.id} px={{base:"20px",md:"20px"}} >
+                <ProductCard  key={product.id} product={product} />
+               </Box>
                 ))}
           </Slider>
         ) : (
