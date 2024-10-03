@@ -107,9 +107,9 @@ const Aboutus = () => {
         </Box>
      
           <Image
-            src={
-              "https://forntend-bucket.s3.ap-south-1.amazonaws.com/sose/images/01.jpg"
-            }
+           src={
+            require("../assets/001.jpg")
+          }
             
             alt=""
             style={{
