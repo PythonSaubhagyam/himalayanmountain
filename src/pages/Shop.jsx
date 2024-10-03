@@ -80,19 +80,22 @@ export default function Shop() {
   });
   const category_name = new URLSearchParams(search).get("category_name");
 
-  let headers = { visitor: CheckOrSetUDID()?.visitor_id };
+  
   const loginInfo = checkLogin();
-  if (loginInfo.isLoggedIn === true) {
-    headers = { Authorization: `token ${loginInfo.token}` };
-  }
+  
   let name = [
     localStorage.getItem("first_name"),
     localStorage.getItem("last_name"),
   ].join(" ");
 
   useEffect(() => {
+    const init = async () => {
+      await CheckOrSetUDID();
+    };
+  
+    init();
     getFilter();
-    CheckOrSetUDID();
+    //CheckOrSetUDID();
     getProducts(); // eslint-disable-next-line
   }, [page, categoryId, sortKey, prod_search, brand, tagWise, productFoam]);
 
@@ -101,6 +104,13 @@ export default function Shop() {
   }, []);
 
   async function getProducts(nextPage) {
+    const checkOrSetUDIDInfo = await CheckOrSetUDID();
+    let headers = { visitor: checkOrSetUDIDInfo.visitor_id };
+    if (loginInfo.isLoggedIn === true) {
+      headers = {
+        Authorization: `token ${loginInfo.token}`,
+      };
+    }
     setLoading(true);
     try {
       let params = categoryId

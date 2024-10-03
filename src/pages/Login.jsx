@@ -32,6 +32,8 @@ export default function Login() {
   }, []);
 
   async function loginUser(credentials) {
+    const checkOrSetUDIDInfo = await CheckOrSetUDID();
+   
     try {
       client
         .post(
@@ -42,7 +44,7 @@ export default function Login() {
           },
           {
             headers: {
-              visitor: CheckOrSetUDID().visitor_id,
+              visitor: checkOrSetUDIDInfo.visitor_id,
             },
           }
         )
