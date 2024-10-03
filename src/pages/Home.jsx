@@ -384,14 +384,14 @@ export default function Home() {
           cursor={"pointer"}
         />
       </Container>
-      <Container maxW={"container.xl"} py={5} px={0}>
+      <Container maxW={"container.xl"}  px={0}>
         <Text
           fontSize={{ base: "xl", sm: "2xl", xl: "3xl" }}
           color={"brand.500"}
           textAlign={{ base: "center", md: "start" }}
           mb={10}
           bgColor={"bg.500"}
-          px={{ base: 2, md: 8 }}
+          //px={{ base: 2, md: 8 }}
           py={4}
         >
           Our Featured Product
