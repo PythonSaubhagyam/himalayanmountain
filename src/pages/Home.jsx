@@ -741,7 +741,7 @@ console.log(sections)
             }}
           />
           <LazyLoadImage
-             src={sections?.length > 0 && sections[0]?.images[0].image}
+             src={sections?.length > 0 && sections[0]?.images[1].image}
             alt="ciolook-certificate"
             style={{
               opacity: 1,
