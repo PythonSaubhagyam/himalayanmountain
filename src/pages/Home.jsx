@@ -242,7 +242,12 @@ export default function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    CheckOrSetUDID();
+    const init = async () => {
+      await CheckOrSetUDID();
+    };
+  
+    init();
+    //CheckOrSetUDID();
     getMustTry();
     getBestSeller();
     getNewArrival();
