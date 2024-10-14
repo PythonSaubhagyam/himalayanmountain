@@ -1230,7 +1230,7 @@ export default function Navbar() {
             >
               <FiInstagram fontSize={20} />
             </Link>
-            {/* <Link
+            <Link
               _hover={{ color: "text.500" }}
               isExternal={true}
               as={ReactRouterLink}
@@ -1239,7 +1239,7 @@ export default function Navbar() {
               }
             >
               <FaWhatsapp fontSize={20} />
-            </Link> */}
+            </Link>
             <Link
               _hover={{ color: "text.500" }}
               isExternal={true}
