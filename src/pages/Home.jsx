@@ -339,6 +339,7 @@ console.log(sections)
           }}
           gap={2}
           my={4}
+         
         >
           <GridItem colSpan={1}  >
             <Image
@@ -411,7 +412,7 @@ console.log(sections)
         />
       </Container>
 
-      <Container maxW={"container.xl"} px={0}>
+      <Container maxW={"container.xl"} px={0} centerContent>
         <Image
           src={require("../assets/home/gree tea.jpg")}
           onClick={() => navigate("/products/1554")}
@@ -425,7 +426,7 @@ console.log(sections)
           textAlign={{ base: "center", md: "start" }}
           mb={10}
           bgColor={"bg.500"}
-          //px={{ base: 2, md: 8 }}
+          px={{ base: 2, md: 8 }}
           py={4}
         >
           Our Featured Product
