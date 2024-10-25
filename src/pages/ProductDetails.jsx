@@ -52,6 +52,7 @@ import ProductImageSection from "../components/ProductImageSection";
 import StarRating from "../components/StarRatings";
 import ScrollToTop from "../components/ScrollToTop";
 import Reviews from "./Reviews";
+import LoginModal from "../components/LoginModal";
 
 function ButtonIncrement(props) {
   return (
@@ -101,6 +102,7 @@ export default function ProductDetails() {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [otherProducts, setOtherProducts] = useState([]);
   const [recentlyViewedProducts, setRecentlyViewedProducts] = useState([]);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isWished, setWished] = useState(false);
   const [counter, setCounter] = useState(1);
   const [totalQuantity, setTotalQuantity] = useState({});
@@ -110,14 +112,14 @@ export default function ProductDetails() {
   // const maxWidth = useBreakpointValue({ base: "100%", lg: "container.xl" });
   // const boxWidth = useBreakpointValue({ base: "100%", lg: "75%" });
   const loginInfo = checkLogin();
-  
+
   const MINIMUM_RATING_THRESHOLD = 0.0;
   const incrementCounter = () => setCounter(counter + 1);
   let decrementCounter = () => setCounter(counter - 1);
   if (counter <= 1) {
     decrementCounter = () => setCounter(1);
   }
- 
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { productId } = useParams();
 
@@ -126,7 +128,6 @@ export default function ProductDetails() {
   }, [productId]);
 
   useEffect(() => {
-   
     getProductsList(productId); // eslint-disable-next-line
   }, [productId]);
 
@@ -144,27 +145,29 @@ export default function ProductDetails() {
         headers: headers,
       }
     );
-    const promise2 = await client.get(`/web/single/product/other/${productId}/`, {
-      headers: headers,
-    });
+    const promise2 = await client.get(
+      `/web/single/product/other/${productId}/`,
+      {
+        headers: headers,
+      }
+    );
     const promise3 = await client.get(
       `/web/single/product/recently-viewed/${productId}/`,
       {
         headers: headers,
       }
     );
-   
 
     Promise.all([promise1, promise2, promise3])
       .then(function (responses) {
         if (responses[0].data.status === true) {
-         setRelatedProducts(responses[0].data?.data)
+          setRelatedProducts(responses[0].data?.data);
         }
         if (responses[1].data.status === true) {
-          setOtherProducts(responses[1].data?.data)
+          setOtherProducts(responses[1].data?.data);
         }
         if (responses[2].data.status === true) {
-         setRecentlyViewedProducts(responses[2].data?.data)
+          setRecentlyViewedProducts(responses[2].data?.data);
         }
 
         //setLoading(false);
@@ -190,12 +193,13 @@ export default function ProductDetails() {
       })
       .then((response) => {
         if (response.data.status) {
-          setTotalQuantity(
-            response.data.data?.available_stock_quantity
-          );
+          setTotalQuantity(response.data.data?.available_stock_quantity);
 
           setProductData(response.data.data);
-          if (response.data.data?.average_rating?.average_rating > MINIMUM_RATING_THRESHOLD) {
+          if (
+            response.data.data?.average_rating?.average_rating >
+            MINIMUM_RATING_THRESHOLD
+          ) {
             setAvgRating(response.data.data.average_rating?.average_rating);
           }
           if (response.data.data.rating_review_data !== null) {
@@ -205,7 +209,7 @@ export default function ProductDetails() {
             setNoOfReviews(response.data.data?.average_rating?.review_count);
           }
           setWished(response.data.data?.is_wished);
-         
+
           window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
           setLoading(false);
         } else {
@@ -220,9 +224,13 @@ export default function ProductDetails() {
         }
       });
   }
-  
-  const modifiedDescription = productData && productData.description
-   .replace(/<h6>/g, '<h6 style="color:#2C4C03; font-weight:bold; font-size:18px;">');
+
+  const modifiedDescription =
+    productData &&
+    productData.description.replace(
+      /<h6>/g,
+      '<h6 style="color:#2C4C03; font-weight:bold; font-size:18px;">'
+    );
   async function handleSubmit(e) {
     e.preventDefault();
     try {
@@ -273,7 +281,7 @@ export default function ProductDetails() {
       // window.alert(
       //   "Sorry! You are not allowed to review this product since you haven't login"
       // );
-      navigate("/login");
+      setIsLoginModalOpen(true)
       //navigate("/login");
       toast({
         title: "Please login to write a review!",
@@ -398,7 +406,11 @@ export default function ProductDetails() {
                           fontWeight={"500"}
                           mr={2}
                           cursor={"pointer"}
-                          onClick={()=>navigate(`/shop?page=1&brand=${productData.brand}&brand_name=${productData.brand_name}`)}
+                          onClick={() =>
+                            navigate(
+                              `/shop?page=1&brand=${productData.brand}&brand_name=${productData.brand_name}`
+                            )
+                          }
                         >
                           Brand :{"  "}
                           {productData.brand_name}
@@ -566,9 +578,7 @@ export default function ProductDetails() {
                           <Display message={counter} />
                         </Button>
                         <ButtonIncrement
-                          disabled={
-                            totalQuantity === counter ? true : false
-                          }
+                          disabled={totalQuantity === counter ? true : false}
                           onClickFunc={incrementCounter}
                         />
                       </ButtonGroup>
@@ -638,7 +648,7 @@ export default function ProductDetails() {
                         onClick={() => handleWishlistChange(productData?.id)}
                       >
                         <AiFillHeart />
-                        <Text >
+                        <Text>
                           {isWished
                             ? "REMOVE FROM WISHLIST"
                             : "ADD TO WISHLIST"}
@@ -658,7 +668,7 @@ export default function ProductDetails() {
                   mt={1}
                   dangerouslySetInnerHTML={{
                     // __html: dompurify.sanitize(productData?.description),
-                    __html:modifiedDescription,
+                    __html: modifiedDescription,
                   }}
                 />
               </Skeleton>
@@ -805,7 +815,12 @@ export default function ProductDetails() {
               </form>
             </ModalContent>
           </Modal>
-
+          {!checkLogin().isLoggedIn && (
+            <LoginModal
+              isOpen={isLoginModalOpen}
+              onClose={() => setIsLoginModalOpen(false)}
+            />
+          )}
           {/* </Flex> */}
           <ScrollToTop />
         </>

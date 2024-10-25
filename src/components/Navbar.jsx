@@ -65,6 +65,7 @@ import { FaApple, FaFacebookF, FaGooglePlay, FaWhatsapp } from "react-icons/fa";
 import { FiInstagram } from "react-icons/fi";
 import { debounce } from "lodash";
 import CartEmitter from "./EventEmitter";
+import LoginModal from "./LoginModal";
 
 const Links = [
   {
@@ -122,7 +123,6 @@ const Links = [
   //   //   location: "/shop?gift=true",
   //   // },
 ];
-
 
 const mainLinks = [
   {
@@ -209,6 +209,7 @@ export default function Navbar() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const menuRef = useRef(null);
   const [topCategory, setTopCategory] = useState([]);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const handleScroll = (direction) => {
     const menu = menuRef.current;
     const scrollAmount = 100; // Adjust this value based on how much you want to scroll
@@ -279,7 +280,7 @@ export default function Navbar() {
     const init = async () => {
       await CheckOrSetUDID();
     };
-  
+
     init();
     //CheckOrSetUDID();
     //getMegaCategories();
@@ -432,7 +433,7 @@ export default function Navbar() {
   const Logout = () => {
     localStorage.clear();
     CartEmitter.emit("updateCartCount", 0);
-    CartEmitter.emit("updateProductTotal",0);
+    CartEmitter.emit("updateProductTotal", 0);
     toast({
       title: "Logged out successfully!",
       status: "success",
@@ -603,8 +604,7 @@ export default function Navbar() {
                     _hover={{ bg: "brand.500" }}
                   > */}
                   <MenuItem
-                    as={Link}
-                    href="/login"
+                    onClick={()=>setIsLoginModalOpen(true)}
                     cursor={"pointer"}
                     _hover={{ textDecoration: "none" }}
                   >
@@ -696,7 +696,11 @@ export default function Navbar() {
                                     setOpenAccrodion();
                                   } else {
                                     navigate(
-                                      `/shop?page=1&category=${section.id}&category_name=${encodeURIComponent(section?.name)}`
+                                      `/shop?page=1&category=${
+                                        section.id
+                                      }&category_name=${encodeURIComponent(
+                                        section?.name
+                                      )}`
                                     );
                                     setAccordion(!isOpen);
                                     onClose();
@@ -759,7 +763,11 @@ export default function Navbar() {
                                                     setOpen(Open);
                                                   } else {
                                                     navigate(
-                                                      `/shop?page=1&category=${subcategory.id}&category_name=${encodeURIComponent(subcategory?.name)}`
+                                                      `/shop?page=1&category=${
+                                                        subcategory.id
+                                                      }&category_name=${encodeURIComponent(
+                                                        subcategory?.name
+                                                      )}`
                                                     );
                                                     setAccordion(!isOpen);
                                                     onClose();
@@ -777,7 +785,11 @@ export default function Navbar() {
                                                 <AccordionIcon
                                                   onClick={() =>
                                                     navigate(
-                                                      `/shop?page=1&category=${subcategory.id}&category_name=${encodeURIComponent(subcategory?.name)}`
+                                                      `/shop?page=1&category=${
+                                                        subcategory.id
+                                                      }&category_name=${encodeURIComponent(
+                                                        subcategory?.name
+                                                      )}`
                                                     )
                                                   }
                                                   display={
@@ -810,7 +822,11 @@ export default function Navbar() {
                                                           key={i}
                                                           onClick={() => {
                                                             navigate(
-                                                              `/shop?page=1&category=${children.id}&category_name=${encodeURIComponent(children?.name)}`
+                                                              `/shop?page=1&category=${
+                                                                children.id
+                                                              }&category_name=${encodeURIComponent(
+                                                                children?.name
+                                                              )}`
                                                             );
                                                             onClose();
                                                           }}
@@ -1069,7 +1085,7 @@ export default function Navbar() {
                     }}
                     fontWeight={500}
                     fontSize={{ md: "14px" }}
-                    onClick={() => navigate("/login")}
+                    onClick={() => setIsLoginModalOpen(true)}
                   >
                     Login
                   </Link>
@@ -1139,7 +1155,13 @@ export default function Navbar() {
                           key={index}
                           onMouseEnter={() => handleShow1(section.children)}
                           onClick={() =>
-                            navigate(`/shop?category=${section.id}&category_name=${encodeURIComponent(section?.name)}`)
+                            navigate(
+                              `/shop?category=${
+                                section.id
+                              }&category_name=${encodeURIComponent(
+                                section?.name
+                              )}`
+                            )
                           }
                           sx={{
                             "&:hover": {
@@ -1161,7 +1183,13 @@ export default function Navbar() {
                       <MenuItem
                         fontSize={"14"}
                         key={subIndex}
-                        onClick={() => navigate(`/shop?category=${item.id}&category_name=${encodeURIComponent(item?.name)}`)}
+                        onClick={() =>
+                          navigate(
+                            `/shop?category=${
+                              item.id
+                            }&category_name=${encodeURIComponent(item?.name)}`
+                          )
+                        }
                         onMouseEnter={() => handleShow2(item.children)}
                         sx={{
                           "&:hover": {
@@ -1179,7 +1207,13 @@ export default function Navbar() {
                       <MenuItem
                         fontSize={"14"}
                         key={nestedIndex}
-                        onClick={() => navigate(`/shop?category=${item.id}&category_name=${encodeURIComponent(item?.name)}`)}
+                        onClick={() =>
+                          navigate(
+                            `/shop?category=${
+                              item.id
+                            }&category_name=${encodeURIComponent(item?.name)}`
+                          )
+                        }
                         sx={{
                           "&:hover": {
                             backgroundColor: "brand.500",
@@ -1295,6 +1329,12 @@ export default function Navbar() {
           </GridItem>
         </Grid>
       </Container>
+      {!checkLogin().isLoggedIn && (
+        <LoginModal
+          isOpen={isLoginModalOpen}
+          onClose={() => setIsLoginModalOpen(false)}
+        />
+      )}
     </Box>
   );
 }

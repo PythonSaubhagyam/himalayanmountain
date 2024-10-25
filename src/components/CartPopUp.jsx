@@ -20,13 +20,18 @@ const CartPopUp = () => {
   const [CartCount, setCartCount] = useState(
     localStorage.getItem("cart_counter") ?? 0
   );
- 
+  // const checkOrSetUDIDInfo = CheckOrSetUDID();
   const loginInfo = checkLogin();
 
+  // let headers = { visitor: checkOrSetUDIDInfo?.visitor_id };
+
+  // if (loginInfo.isLoggedIn === true) {
+  //   headers = { Authorization: `token ${loginInfo?.token}` };
+  // }
 
   const [total, setTotal] = useState(
     localStorage.getItem("product_total") === null ||
-      localStorage.getItem("product_total") === undefined
+    localStorage.getItem("product_total") === undefined
       ? 0
       : localStorage.getItem("product_total")
   );
@@ -60,6 +65,8 @@ const CartPopUp = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const isEliteMember = localStorage.getItem("is_sose_elite_user") === "true";
+
   return (
     <>
       <Container
@@ -67,7 +74,7 @@ const CartPopUp = () => {
         style={{
           boxShadow: "rgba(0, 0, 0, 0.15) 0px 1.95px 0px",
           position: "sticky",
-          overFlow: "hidden",
+          overflow: "hidden",
           bottom: 0,
           zIndex: 9,
         }}
@@ -75,29 +82,47 @@ const CartPopUp = () => {
         px={1}
         display={location.pathname === "/cart" ? "none" : "flex"}
       >
-        <Box
-          bgColor={"brand.500"}
-          color={"#fff"}
-          textAlign={"center"}
-          py={3}
-          fontWeight={400}
-          borderTopRightRadius={"20px"}
-          borderTopLeftRadius={"20px"}
-          w={{ md: 600, base: "100%" }}
-          opacity={0.9}
-          fontSize={13}
-        >
-          Upgrade to{" "}
-          <Link href="/subscription-plans" fontWeight={700} fontSize={"sm"}>
-            SOSE Elite
-          </Link>{" "}
-          now for complimentary delivery and elevate your Shopping experience!
-        </Box>
+        {isEliteMember ? (
+          <Box
+            bgColor={"brand.500"}
+            color={"#fff"}
+            textAlign={"center"}
+            py={3}
+            fontWeight={400}
+            borderTopRightRadius={"20px"}
+            borderTopLeftRadius={"20px"}
+            w={{ md: 600, base: "100%" }}
+            opacity={0.9}
+            fontSize={13}
+          >
+            
+          </Box>
+        ) : (
+          <Box
+            bgColor={"brand.500"}
+            color={"#fff"}
+            textAlign={"center"}
+            py={3}
+            fontWeight={400}
+            borderTopRightRadius={"20px"}
+            borderTopLeftRadius={"20px"}
+            w={{ md: 600, base: "100%" }}
+            opacity={0.9}
+            fontSize={13}
+          >
+            Upgrade to{" "}
+            <Link href="/subscription-plans" fontWeight={700} fontSize={"sm"}>
+              SOSE Elite
+            </Link>{" "}
+            now for complimentary delivery and elevate your shopping experience!
+          </Box>
+        )}
         <Flex
           justifyContent={"space-between"}
           px={3}
           py={2}
-          backgroundColor={"#5b5b5b94"}
+          backgroundColor={"#5b5b5bbd"}
+
           color={"#fff"}
           w={{ md: 600, base: "100%" }}
           opacity={0.9}
