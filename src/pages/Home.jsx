@@ -37,216 +37,99 @@ import { useNavigate, NavLink as RouterLink } from "react-router-dom";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import Testimonials from "../components/testimonials";
 import { info } from "sass";
+import {
+  fetchBanners,
+  fetchUpperSection,
+  fetchSkinglowSection,
+  fetchLowerSection,
+  fetchBlogs,
+  fetchNewarrival,
+  fetchMusttry,
+  fetchBestofalltime,
+  fetchStatistics,
+  fetchLower
+} from "../redux/slices/homeApi";
+import { useDispatch, useSelector } from "react-redux";
 
 
 export default function Home() {
   const [isFullScreen] = useMediaQuery("(min-width: 768px)");
   const width = useBreakpointValue({ base: "100%", lg: "100%" });
   const height = useBreakpointValue({ base: "200", lg: "400" });
-  const [banners, setBanners] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [isMobile] = useMediaQuery("(max-width: 480px)");
-  const [newArrival, setNewArrival] = useState([]);
-  const [mustTry, setMustTry] = useState([]);
-  const [bestSeller, setBestSeller] = useState([]);
   const [sections, setSections] = useState([]);
-  const [awardsSection, setAwardSection] = useState([]);
-  const [servicesSection, setServicesSection] = useState([]);
-  const [availableSection, setAvailableSection] = useState([]);
-  const [aboutSection, setAboutSection] = useState([]);
-  const [certificateSection, setCertificateSection] = useState([]);
-  const [glowingSkinSection, setGlowingSkinSection] = useState([]);
-  const [featuredProductsSection, setFeaturedProductsSection] = useState([]);
-  const [ethicalTeaSection, setEthicalTeaSection] = useState([]);
-  const [appleCiderSection, setAppleCiderSection] = useState([]);
-  const [cupOfTeaSection, setCupOfTeaSection] = useState([]);
-  const [informativeSection, setInformativeSection] = useState([]);
-  const [statisticsSection, setStatisticsSection] = useState([]);
-  const [licencesSection, setLicencesSection] = useState([]);
-  const [nonGMOSection, setNonGMOSection] = useState([]);
   const loginInfo = checkLogin();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const checkOrSetUDIDInfo = CheckOrSetUDID();
   const [showPopup, setShowPopup] = useState(
     sessionStorage.getItem("hasShownPopup")
   );
-  // let [isFull] = useMediaQuery("(max-width:1920px)");
-  const [blogs, setBlogs] = useState([]);
   const isMobiles = width <= 768;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {
+    banners,
+    upperSection,
+    skinSection,
+    lowerSection,
+    blogs,
+    newArrival,
+    mustTry,
+    bestSeller,
+    loader,
+    statisticsSection,
+    lowerMostSection
+  } = useSelector((state) => state.banners);
+
+  const {     
+    aboutSection,
+    certificateSection
+  } = upperSection;
+  const {     
+    glowingSkinSection,
+    featuredProductsSection,
+    appleCiderSection,
+  } = skinSection;
+  const {     
+    ethicalTeaSection,
+    cupOfTeaSection,
+    informativeSection,
+    licencesSection,
+    nonGMOSection,
+  } = lowerSection;
+  const {     
+    awardsSection,
+    servicesSection,
+    availableSection
+  } = lowerMostSection;
+
 
   useEffect(() => {
     const init = async () => {
       await CheckOrSetUDID();
+      dispatch(fetchBanners());
+      dispatch(fetchUpperSection());
+      dispatch(fetchSkinglowSection());
+      dispatch(fetchLowerSection());
+      dispatch(fetchBlogs());
+      dispatch(fetchNewarrival());
+      dispatch(fetchMusttry());
+      dispatch(fetchBestofalltime());
+      dispatch(fetchStatistics()); 
+      dispatch(fetchLower()); 
     };
 
     init();
-    //CheckOrSetUDID();
-    getBanners();
-    getMustTry();
-    getBestSeller();
-    getNewArrival();
-    getBlogs();
-    getUpperSectionUpper();
-    getUpperSectionProduct();
-    getUpperSectionLower();
-    getLowerSection();
-    getStatisticsSection();
     if (showPopup === null && !loginInfo.isLoggedIn) {
       setIsLoginModalOpen(true);
     }
-  }, []);
-
-  async function getBanners() {
-    setLoading(true);
-    try {
-      const response = await client.get("/ecommerce/banners/?sequence=Upper");
-
-      if (response.data.status === true) {
-        setBanners(response?.data?.banner);
-      }
-
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.error("Error fetching data:", error);
-    }
-  }
-
-  async function getNewArrival() {
-    const response = await client.get("newarrival/list");
-    if (response) {
-      setNewArrival(response.data.data);
-    }
-    setLoading(false);
-  }
-  async function getMustTry() {
-    const response = await client.get("musttry/list");
-    if (response) {
-      setMustTry(response.data.data);
-    }
-    setLoading(false);
-  }
-  async function getBestSeller() {
-    const response = await client.get("bestofalltime/list");
-    if (response) {
-      setBestSeller(response.data.data);
-    }
-    setLoading(false);
-  }
-
-  async function getBlogs() {
-    const params = {};
-    const response = await client.get("/home/blogs/", {
-      params: params,
-    });
-    if (response.data.status === true) {
-      setBlogs(response.data.blogs);
-    }
-  }
-  async function getLowerSection() {
-    const params = {};
-    const response = await client.get("/lower-section/", {
-      params: params,
-    });
-    if (response.data.status === true) {
-      setSections(response.data.data);
-
-      const ourServicesSection = response.data.data?.filter(
-        (section) => section.id === 2
-      );
-      const availableAtSection = response.data.data?.filter(
-        (section) => section.id === 3
-      );
-      const ourAwardsSection = response.data.data?.filter(
-        (section) => section.id === 1
-      );
-
-      setAwardSection(ourAwardsSection);
-      setServicesSection(ourServicesSection);
-      setAvailableSection(availableAtSection);
-    }
-  }
-
-  const getUpperSectionUpper = async () => {
-    const response = await client.get("/himalayanmountain-section/?type=upper");
-
-    if (response.data.status === true) {
-      const about = response.data.data?.filter((section) => section.id === 1);
-
-      const certificate = response.data.data?.filter(
-        (section) => section.id === 2
-      );
-
-      setAboutSection(about);
-      setCertificateSection(certificate);
-    }
-  };
-  const getUpperSectionProduct = async () => {
-    const response = await client.get(
-      "/himalayanmountain-section/?type=product"
-    );
-
-    if (response.data.status === true) {
-      const glowingSkin = response.data.data?.filter(
-        (section) => section.id === 3
-      );
-      const featuredProducts = response.data.data?.filter(
-        (section) => section.id === 4
-      );
-      const appleCider = response.data.data?.filter(
-        (section) => section.id === 6
-      );
-
-      setGlowingSkinSection(glowingSkin);
-      setFeaturedProductsSection(featuredProducts);
-      setAppleCiderSection(appleCider);
-    }
-  };
-  const getUpperSectionLower = async () => {
-    const response = await client.get("/himalayanmountain-section/?type=lower");
-
-    if (response.data.status === true) {
-      const ethicalTea = response.data.data?.filter(
-        (section) => section.id === 5
-      );
-      const makeTea = response.data.data?.filter((section) => section.id === 7);
-      const informative = response.data.data?.filter(
-        (section) => section.id === 8
-      );
-      const lincences = response.data.data?.filter(
-        (section) => section.id === 9
-      );
-
-      const nonGMO = response.data.data?.filter((section) => section.id === 10);
-
-      setEthicalTeaSection(ethicalTea);
-      setCupOfTeaSection(makeTea);
-      setInformativeSection(informative);
-      setLicencesSection(lincences);
-      setNonGMOSection(nonGMO);
-    }
-  };
-  async function getStatisticsSection() {
-    const params = {};
-    const response = await client.get("/statistics-section/", {
-      params: params,
-    });
-    if (response.data.status === true) {
-      setStatisticsSection(response?.data?.data);
-    }
-  }
+  }, [dispatch]);
+ 
   return (
     <>
-      {/* {loading === true ? (
-        <Center h="100vh" w="100vw" backgroundColor={"bg.500"}>
-          <Loader site={true} />
-        </Center>
-      ) : (
-        <> */}
       <Navbar />
       <Container maxW={"container.xl"} px={0}>
-        {loading === true ? (
+        {loader === true ? (
           <Skeleton h={489}></Skeleton>
         ) : (
           <Carousel banners={banners?.length > 0 && banners} />
@@ -444,7 +327,7 @@ export default function Home() {
       {newArrival && newArrival?.length > 0 && (
         <ProductListSectionHome
           title="Try Our New Products"
-          loading={loading}
+          loading={loader}
           products={newArrival}
           type={isMobile && "carousal"}
         />
@@ -453,7 +336,7 @@ export default function Home() {
       {mustTry && mustTry?.length > 0 && (
         <ProductListSectionHome
           title="Must Try: Himalayan Mountain Products"
-          loading={loading}
+          loading={loader}
           products={mustTry}
           type={isMobile && "carousal"}
         />
@@ -461,7 +344,7 @@ export default function Home() {
       {bestSeller && bestSeller?.length > 0 && (
         <ProductListSectionHome
           title="All Time Best Sellers"
-          loading={loading}
+          loading={loader}
           products={bestSeller}
           type={isMobile && "carousal"}
         />
@@ -624,58 +507,6 @@ export default function Home() {
             </SimpleGrid>
           </Container>
         )}
-
-      {/* <Box
-          w="100%"
-          backgroundImage={
-            "https://forntend-bucket.s3.ap-south-1.amazonaws.com/sose/images/HomePage/line.png"
-          }
-          backgroundSize="100%"
-          backgroundPosition="50% 100%"
-          backgroundRepeat={"no-repeat"}
-        >
-          <Heading
-            color="brand.500"
-            size="lg"
-            mx="auto"
-            align={"center"}
-            mb={"5"}
-            mt={3}
-            pb={"10px"}
-          >
-            BRAND PARTNERS
-          </Heading>
-        </Box>
-        <Grid
-          templateColumns={{
-            base: "repeat(2,1fr)",
-            md: "repeat(3,1fr)",
-            xl: "repeat(6,1fr)",
-          }}
-          spacing={{ base: 10, md: 14 }}
-          py={3}
-          px={{ base: 15, md: 20, lg: 24 }}
-        >
-          {brands?.map((brand, index) => (
-            <GridItem as={RouterLink} to={brand?.href ?? "#"}>
-              <Image
-                as={LazyLoadImage}
-                key={index}
-                src={brand.src}
-                boxSize={{
-                  base: "150px",
-                  md: "150px",
-                  lg: "180px",
-                }}
-                alt={brand.alt}
-                style={{
-                  opacity: 1,
-                  transition: "opacity 0.7s", // Note the corrected syntax here
-                }}
-              />
-            </GridItem>
-          ))}
-        </Grid> */}
       {awardsSection?.length > 0 &&
         awardsSection[0]?.is_visible_on_website === true && (
           <Container maxW={{ base: "100vw", md: "container.xl" }}>
@@ -770,44 +601,7 @@ export default function Home() {
             </Grid>
           </Container>
         )}
-      {/* <Grid
-          templateColumns={{
-            base: "repeat(3, 1fr)",
-            md: "repeat(3, 1fr)",
-            lg: "repeat(5,1fr)",
-          }}
-          my={6}
-          mx={{ md: "15%", base: 3 }}
-        >
-          {imageInfo?.map((data) => (
-            <GridItem>
-              <Flex
-                flexDirection={"column"}
-                alignItems={"center"}
-                justifyContent={"center"}
-              >
-                <LazyLoadImage
-                  cursor={"pointer"}
-                  transition="all 1s ease"
-                  _hover={{
-                    transform: "scale(1.25)",
-                  }}
-                  src={data.src}
-                  alt={data.name}
-                  style={{
-                    opacity: 1,
-                    transition: "opacity 0.7s",
-                    width: "100px",
-                    // Note the corrected syntax here
-                  }}
-                />
-                <Text textAlign={"center"} fontSize={"14px"} mt={2}>
-                  {data.name}
-                </Text>
-              </Flex>
-            </GridItem>
-          ))}
-        </Grid> */}
+  
       {nonGMOSection?.length > 0 &&
         nonGMOSection[0]?.is_visible_on_website === true && (
           <Container maxW={"container.xl"} pt={15} pb={20} centerContent>
@@ -884,8 +678,6 @@ export default function Home() {
       )}
       <ScrollToTop />
       <Footer />
-      {/* </>
-      )} */}
     </>
   );
 }

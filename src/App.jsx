@@ -4,8 +4,8 @@ import Router from "./routes/routes";
 import "@fontsource/open-sans";
 import moment from "moment";
 import { theme } from "./theme/theme";
-import { useEffect } from "react";
-import client from "./setup/axiosClient";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 export default function App() {
   moment.tz.setDefault("Asia/Kolkata");
@@ -16,8 +16,10 @@ export default function App() {
   }, []);*/
 
   return (
+    <Provider store={store}>
     <ChakraProvider theme={theme}>
       <RouterProvider router={Router}></RouterProvider>
     </ChakraProvider>
+    </Provider>
   );
 }
