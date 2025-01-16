@@ -47,10 +47,11 @@ import {
   fetchMusttry,
   fetchBestofalltime,
   fetchStatistics,
-  fetchLower
+  fetchLower,
 } from "../redux/slices/homeApi";
 import { useDispatch, useSelector } from "react-redux";
-
+import CountUp from "react-countup";
+import ScrollTrigger from "react-scroll-trigger";
 
 export default function Home() {
   const [isFullScreen] = useMediaQuery("(min-width: 768px)");
@@ -58,6 +59,7 @@ export default function Home() {
   const height = useBreakpointValue({ base: "200", lg: "400" });
   const [isMobile] = useMediaQuery("(max-width: 480px)");
   const [sections, setSections] = useState([]);
+  const [countUp, setCountUp] = useState();
   const loginInfo = checkLogin();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const checkOrSetUDIDInfo = CheckOrSetUDID();
@@ -78,31 +80,20 @@ export default function Home() {
     bestSeller,
     loader,
     statisticsSection,
-    lowerMostSection
+    lowerMostSection,
   } = useSelector((state) => state.banners);
 
-  const {     
-    aboutSection,
-    certificateSection
-  } = upperSection;
-  const {     
-    glowingSkinSection,
-    featuredProductsSection,
-    appleCiderSection,
-  } = skinSection;
-  const {     
+  const { aboutSection, certificateSection } = upperSection;
+  const { glowingSkinSection, featuredProductsSection, appleCiderSection } =
+    skinSection;
+  const {
     ethicalTeaSection,
     cupOfTeaSection,
     informativeSection,
     licencesSection,
     nonGMOSection,
   } = lowerSection;
-  const {     
-    awardsSection,
-    servicesSection,
-    availableSection
-  } = lowerMostSection;
-
+  const { awardsSection, servicesSection, availableSection } = lowerMostSection;
 
   useEffect(() => {
     const init = async () => {
@@ -115,8 +106,8 @@ export default function Home() {
       dispatch(fetchNewarrival());
       dispatch(fetchMusttry());
       dispatch(fetchBestofalltime());
-      dispatch(fetchStatistics()); 
-      dispatch(fetchLower()); 
+      dispatch(fetchStatistics());
+      dispatch(fetchLower());
     };
 
     init();
@@ -124,7 +115,7 @@ export default function Home() {
       setIsLoginModalOpen(true);
     }
   }, [dispatch]);
- 
+
   return (
     <>
       <Navbar />
@@ -480,33 +471,42 @@ export default function Home() {
           ))}
         </Grid>
       </Container>
-      {statisticsSection?.length > 0 &&
-        statisticsSection[0]?.is_visible_on_website === true && (
-          <Container bgColor={"#E6E6E6"} maxW={"container.xl"} py={2}>
-            <SimpleGrid
-              columns={[2, 3, null, 6]}
-              px={6}
-              maxW={"container.xl"}
-              my={6}
-              align="center"
-              spacingX={{ base: "10vw", md: "30px" }}
-              spacingY="40px"
-            >
-              {statisticsSection?.length > 0 &&
-                statisticsSection?.map((data) => (
-                  <Stat>
-                    <StatNumber
-                      color="text.500"
-                      fontSize={{ base: "3xl", md: "3xl" }}
-                    >
-                      {data?.value}
-                    </StatNumber>
-                    <StatHelpText color="gray.600">{data?.name}</StatHelpText>
-                  </Stat>
-                ))}
-            </SimpleGrid>
-          </Container>
-        )}
+      
+      {statisticsSection?.length > 0 && (
+        <Container backgroundColor={"bg.500"} maxW={"container.xl"} py={2}>
+          <SimpleGrid
+            columns={[2, 3, null, 6]}
+            px={6}
+            maxW={"container.xl"}
+            my={6}
+            backgroundColor={"bg.500"}
+            align="center"
+            spacingX={{ base: "10vw", md: "30px" }}
+            spacingY="40px"
+          >
+            {statisticsSection?.length > 0 &&
+        statisticsSection?.map((data, index) => (
+          <Stat key={data.id}>
+            <StatNumber fontSize={{ base: "3xl", md: "3xl" }}>
+              <ScrollTrigger onEnter={() => setCountUp(true)}>
+                {countUp ? (
+                  <CountUp
+                    start={0}
+                    end={Number(data.value.replace(/[^\d]/g, ""))}
+                    duration={4}
+                    delay={0}
+                  />
+                ) : null}
+                {index === statisticsSection.length - 1 ? "th" : "+"}
+              </ScrollTrigger>
+            </StatNumber>
+            <StatHelpText color="gray.600">{data?.name}</StatHelpText>
+          </Stat>
+        ))}
+          </SimpleGrid>
+        </Container>
+      )}
+
       {awardsSection?.length > 0 &&
         awardsSection[0]?.is_visible_on_website === true && (
           <Container maxW={{ base: "100vw", md: "container.xl" }}>
@@ -601,14 +601,11 @@ export default function Home() {
             </Grid>
           </Container>
         )}
-  
+
       {nonGMOSection?.length > 0 &&
         nonGMOSection[0]?.is_visible_on_website === true && (
           <Container maxW={"container.xl"} pt={15} pb={20} centerContent>
-            <Image
-              w={{ md: "65%" }}
-              src={nonGMOSection[0]?.image}
-            />
+            <Image w={{ md: "65%" }} src={nonGMOSection[0]?.image} />
           </Container>
         )}
       {servicesSection?.length > 0 &&
@@ -670,7 +667,7 @@ export default function Home() {
             />
           </Container>
         )}
-       {!checkLogin().isLoggedIn && (
+      {!checkLogin().isLoggedIn && (
         <LoginModal
           isOpen={isLoginModalOpen}
           onClose={() => setIsLoginModalOpen(false)}
