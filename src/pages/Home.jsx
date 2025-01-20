@@ -37,6 +37,7 @@ import { useNavigate, NavLink as RouterLink } from "react-router-dom";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import Testimonials from "../components/testimonials";
 import { info } from "sass";
+import { Helmet } from "react-helmet";
 
 
 export default function Home() {
@@ -238,6 +239,14 @@ export default function Home() {
   }
   return (
     <>
+    <Helmet>
+        <title>Himalayan Mountain - Home</title> {/* Set default title */}
+        <meta
+          name="description"
+          content=""
+        />
+        {/* You can add other meta tags for SEO */}
+      </Helmet>
       {/* {loading === true ? (
         <Center h="100vh" w="100vw" backgroundColor={"bg.500"}>
           <Loader site={true} />

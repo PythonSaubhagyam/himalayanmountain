@@ -306,14 +306,21 @@ export default function ProductDetails() {
   };
   return (
     <>
-    {" "}
+      {" "}
       <Helmet>
-        <title>{productData?.name || "My Store"}</title>
-        <meta name="description" content={productData?.description} />
+        <title>{productData?.metatitle || productData?.name}</title>
+        <meta name="description" content={productData?.metadescription} />
+        <meta name="keywords" content={productData?.metakeywords} />
         <meta property="og:title" content={productData?.name} />
-        <meta property="og:description" content={productData?.description} />
+        <meta
+          property="og:description"
+          content={productData?.metadescription}
+        />
         <meta property="og:price" content={productData?.base_price} />
-        <meta property="og:Rating" content={productData?.average_rating?.average_rating}/>
+        <meta
+          property="og:Rating"
+          content={productData?.average_rating?.average_rating}
+        />
         <meta property="og:Stock" content={"In Stock"} />
         <meta property="og:Delivery" content={"4-7 day delivery"} />
         <meta property="og:image" content={productData?.images[0]} />
@@ -337,7 +344,7 @@ export default function ProductDetails() {
                   .split(" ")
                   .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                   .join(" ")}`}
-                // thirdUrl={`/shop?category=${categories.categoryId || ''}`}
+              // thirdUrl={`/shop?category=${categories.categoryId || ''}`}
               />
             </Box>
           </Container>
@@ -367,7 +374,7 @@ export default function ProductDetails() {
                   gap={2}
                   align={{ base: "flex-start", md: "flex-start" }}
 
-                  //mt={{md:16}}
+                //mt={{md:16}}
                 >
                   <Heading
                     // mb={2}
@@ -648,15 +655,15 @@ export default function ProductDetails() {
                         _hover={
                           isWished
                             ? {
-                                color: "white",
-                                bg: "red.600",
-                                cursor: "pointer",
-                              }
+                              color: "white",
+                              bg: "red.600",
+                              cursor: "pointer",
+                            }
                             : {
-                                color: "white",
-                                bg: "brand.900",
-                                cursor: "pointer",
-                              }
+                              color: "white",
+                              bg: "brand.900",
+                              cursor: "pointer",
+                            }
                         }
                         onClick={() => handleWishlistChange(productData?.id)}
                       >

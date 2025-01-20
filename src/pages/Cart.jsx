@@ -40,6 +40,7 @@ import CheckOrSetUDID from "../utils/checkOrSetUDID";
 import checkLogin from "../utils/checkLogin";
 import BreadCrumbCom from "../components/BreadCrumbCom";
 import LoginModal from "../components/LoginModal"
+import MetaTags from "../context/MetaTagsContext";
 
 export default function Cart() {
   const messageRef = useRef(null);
@@ -98,11 +99,11 @@ export default function Cart() {
     setLoading(false);
   }
 
-  
+
   useEffect(() => {
     const loginInfo = checkLogin();
     if (loginInfo.isLoggedIn) {
-      getCart(); 
+      getCart();
     }
   }, [checkLogin().isLoggedIn]);
 
@@ -479,9 +480,12 @@ export default function Cart() {
       </>
     );
   };
+  const pageUrl = "/cart";
 
   return (
     <>
+      <MetaTags pageUrl={pageUrl} />
+
       <Navbar />
       <Container maxW="container.xl">
         <BreadCrumbCom second={"My Cart"} secondUrl={"/cart"} />
