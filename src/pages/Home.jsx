@@ -38,6 +38,8 @@ import { ChevronRightIcon } from "@chakra-ui/icons";
 import Testimonials from "../components/testimonials";
 import { info } from "sass";
 import { Helmet } from "react-helmet";
+import MetaHome from "../components/MetaHome";
+
 
 
 export default function Home() {
@@ -237,16 +239,17 @@ export default function Home() {
       setStatisticsSection(response?.data?.data);
     }
   }
+  const pageUrl = "/";
   return (
     <>
-    <Helmet>
-        <title>Himalayan Mountain - Home</title> {/* Set default title */}
+    <MetaHome pageUrl={pageUrl} />
+    {/* <Helmet>
+        <title>Himalayan Mountain - Home</title> 
         <meta
           name="description"
           content=""
         />
-        {/* You can add other meta tags for SEO */}
-      </Helmet>
+      </Helmet> */}
       {/* {loading === true ? (
         <Center h="100vh" w="100vw" backgroundColor={"bg.500"}>
           <Loader site={true} />
