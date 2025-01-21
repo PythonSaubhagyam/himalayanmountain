@@ -33,21 +33,12 @@ import {
 } from "@chakra-ui/react";
 import client from "../setup/axiosClient";
 import CheckOrSetUDID from "../utils/checkOrSetUDID";
-import { useNavigate, NavLink as RouterLink } from "react-router-dom";
+import { useNavigate, NavLink as RouterLink,Link as ReactRouterLink } from "react-router-dom";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import Testimonials from "../components/testimonials";
 import { info } from "sass";
 import {
-  fetchBanners,
-  fetchUpperSection,
-  fetchSkinglowSection,
-  fetchLowerSection,
-  fetchBlogs,
-  fetchNewarrival,
-  fetchMusttry,
-  fetchBestofalltime,
-  fetchStatistics,
-  fetchLower,
+  initializeAppData
 } from "../redux/slices/homeApi";
 import { useDispatch, useSelector } from "react-redux";
 import CountUp from "react-countup";
@@ -79,8 +70,9 @@ export default function Home() {
     mustTry,
     bestSeller,
     loader,
-    statisticsSection,
+    statistics,
     lowerMostSection,
+    hasFetched
   } = useSelector((state) => state.banners);
 
   const { aboutSection, certificateSection } = upperSection;
@@ -98,16 +90,6 @@ export default function Home() {
   useEffect(() => {
     const init = async () => {
       await CheckOrSetUDID();
-      dispatch(fetchBanners());
-      dispatch(fetchUpperSection());
-      dispatch(fetchSkinglowSection());
-      dispatch(fetchLowerSection());
-      dispatch(fetchBlogs());
-      dispatch(fetchNewarrival());
-      dispatch(fetchMusttry());
-      dispatch(fetchBestofalltime());
-      dispatch(fetchStatistics());
-      dispatch(fetchLower());
     };
 
     init();
@@ -115,6 +97,12 @@ export default function Home() {
       setIsLoginModalOpen(true);
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!hasFetched) {
+      dispatch(initializeAppData());
+    }
+  }, [dispatch, hasFetched]);
 
   return (
     <>
@@ -441,7 +429,8 @@ export default function Home() {
                   />
                   <LinkOverlay
                     _hover={{ color: "text.500" }}
-                    href={`/blogs/${blog.id}/`}
+                    as={ReactRouterLink}
+                    to={`/blogs/${blog.id}/`}
                   >
                     <Heading size="sm" fontWeight={500} m={2}>
                       {blog.title}
@@ -472,7 +461,7 @@ export default function Home() {
         </Grid>
       </Container>
       
-      {statisticsSection?.length > 0 && (
+      {statistics?.length > 0 && (
         <Container backgroundColor={"bg.500"} maxW={"container.xl"} py={2}>
           <SimpleGrid
             columns={[2, 3, null, 6]}
@@ -484,10 +473,10 @@ export default function Home() {
             spacingX={{ base: "10vw", md: "30px" }}
             spacingY="40px"
           >
-            {statisticsSection?.length > 0 &&
-        statisticsSection?.map((data, index) => (
+            {statistics?.length > 0 &&
+              statistics?.map((data, index) => (
           <Stat key={data.id}>
-            <StatNumber fontSize={{ base: "3xl", md: "3xl" }}>
+            <StatNumber fontSize={{ base: "3xl", md: "3xl" }} color="gray.600">
               <ScrollTrigger onEnter={() => setCountUp(true)}>
                 {countUp ? (
                   <CountUp
@@ -497,7 +486,7 @@ export default function Home() {
                     delay={0}
                   />
                 ) : null}
-                {index === statisticsSection.length - 1 ? "th" : "+"}
+                {index === statistics.length - 1 ? "th" : "+"}
               </ScrollTrigger>
             </StatNumber>
             <StatHelpText color="gray.600">{data?.name}</StatHelpText>

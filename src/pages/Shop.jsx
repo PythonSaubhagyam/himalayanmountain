@@ -4,6 +4,8 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 import CategoryTree from "../components/CategoryTree";
+import { fetchFilters } from "../redux/slices/shopApi";
+import { useDispatch, useSelector } from "react-redux";
 // import CategoryAccessTree from "../components/CategoryAccessTree";
 import ShopProductCard from "../components/ShopProductCard";
 import {
@@ -46,9 +48,6 @@ export default function Shop() {
   const [filteredData, setFilteredData] = useState([]);
   const [sortKey, setSortKey] = useState(null);
   const [tagWise, setTagWise] = useState(null);
-  const [tagsArray, setTagsArray] = useState();
-  const [productFoamsArray, setProductFoamsArray] = useState();
-  const [brandArray, setBrandArray] = useState();
   const [productFoam, setProductFoam] = useState(null);
   // const [brandWise, setBrandWise] = useState(null);
   const [banners, setBanners] = useState({
@@ -80,6 +79,10 @@ export default function Shop() {
   });
   const category_name = new URLSearchParams(search).get("category_name");
 
+  const dispatch = useDispatch();
+  const { tagsArray, productFoamsArray, brandArray } = useSelector(
+    (state) => state.shop
+  );
   
   const loginInfo = checkLogin();
   
@@ -94,14 +97,10 @@ export default function Shop() {
     };
   
     init();
-    getFilter();
     //CheckOrSetUDID();
     getProducts(); // eslint-disable-next-line
   }, [page, categoryId, sortKey, prod_search, brand, tagWise, productFoam]);
 
-  // useEffect(() => {
-  //   getCategories();
-  // }, []);
 
   async function getProducts(nextPage) {
     const checkOrSetUDIDInfo = await CheckOrSetUDID();
@@ -198,56 +197,11 @@ export default function Shop() {
     }
   }
 
-  async function getCategories() {
-    setCatLoading(true);
-    const response = await client.get("/categories/?mega_menu=mega_menu", {
-      params: { list: true },
-    });
-    if (response.data.status === true) {
-      setCategories(response.data.categories);
-      setCatLoading(false);
-    }
-  }
 
-  async function getFilter() {
-    try {
-      const [tagsResponse, foamsResponse, brandResponse] = await Promise.all([
-        client.get("/web/product-tags/list/"),
-        client.get("/web/product-foams/list/"),
-        client.get("/web/brand/list/"),
-      ]);
-      let TagsArray = [];
-      tagsResponse?.data?.data?.map((data) =>
-        TagsArray.push({
-          label: CapitalizeLetter(data.name),
-          value: data.id,
-        })
-      );
-      setTagsArray(TagsArray);
-      let ProductFoamsArray = [];
-      foamsResponse?.data?.data?.map((data) =>
-        ProductFoamsArray.push({
-          label: CapitalizeLetter(data.name),
-          value: data.id,
-        })
-      );
-      setProductFoamsArray(ProductFoamsArray);
-      let BrandArray = [];
-      brandResponse?.data?.data?.map((data) =>
-        BrandArray.push({
-          label: CapitalizeLetter(data.name),
-          value: data.id,
-        })
-      );
-      setBrandArray(BrandArray);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }
-  // useEffect(() => {
-  //   const filtered = categories.filter((item) => item.id === categoryId);
-  //   setFilteredData(filtered);
-  // }, [data, categoryId]);
+  
+  useEffect(() => {
+    dispatch(fetchFilters());
+  }, [dispatch]);
 
   useEffect(() => {
     setCurrentPage(1);

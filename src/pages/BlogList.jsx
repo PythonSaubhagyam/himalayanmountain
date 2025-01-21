@@ -33,6 +33,7 @@ import {
 } from "@ajna/pagination";
 import BreadCrumbCom from "../components/BreadCrumbCom";
 import ScrollToTop from "../components/ScrollToTop";
+import { Link as ReactRouterLink } from "react-router-dom"
 
 export default function BlogList() {
   const [blogs, setBlogs] = useState([]);
@@ -155,7 +156,7 @@ export default function BlogList() {
               {blogs.map((blog) => (
                 <Box key={blog.id}>
                   <LinkBox my={4}>
-                    <LinkOverlay href={`/blogs/${blog.id}/`}>
+                    <LinkOverlay as={ReactRouterLink} to={`/blogs/${blog.id}/`}>
                       <Heading size="lg" fontWeight={"600"} color="brand.500">
                         {blog.title}
                       </Heading>

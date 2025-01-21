@@ -1,10 +1,54 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../../setup/axiosClient";
 
+
+
+export const initializeAppData = createAsyncThunk("app/initializeData", async (_, { rejectWithValue }) => {
+  try {
+    const [
+      bannersResponse,
+      upperSectionResponse,
+      tryOurNewProductResponse,
+      mustTryResponse,
+      allTimeBestSellerResponse,
+      lowerSectionResponse,
+      blogsResponse,
+      statisticsResponse,
+      lowerMostSectionResponse,
+      skinSectionResponse
+    ] = await Promise.all([
+      client.get("/ecommerce/banners/?sequence=Upper"),
+      client.get("/himalayanmountain-section/?type=upper"),
+      client.get("/newarrival/list"),
+      client.get("/musttry/list"),
+      client.get("/bestofalltime/list"),
+      client.get("/himalayanmountain-section/?type=lower"),
+      client.get("/home/blogs/"),
+      client.get("/statistics-section/"),
+      client.get("/lower-section/"),
+      client.get("/himalayanmountain-section/?type=product"),
+    ]);
+
+    return {
+      banners: bannersResponse.data.banner || [],
+      upperSection: upperSectionResponse.data.data || [],
+      newArrival: tryOurNewProductResponse.data.data || [],
+      mustTry: mustTryResponse.data.data || [],
+      bestSeller: allTimeBestSellerResponse.data.data || [],
+      lowerSection: lowerSectionResponse.data.data || [],
+      blogs: blogsResponse.data.blogs || [],
+      statistics: statisticsResponse.data.data || {},
+      lowerMostSection: lowerMostSectionResponse.data.data || [],
+      skinSection: skinSectionResponse.data.data || [],
+    };
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+});
+
+
 const initialState = {
   banners: [],
-  middleBanners: [],
-  lowerBanners: [],
   loader: false,
   error: null,
   upperSection: {
@@ -34,100 +78,8 @@ const initialState = {
   bestSeller: [],
   blogs: [],
   statistics: [],
+  hasFetched: false,
 };
-
-const getResponseData = (response, key) => {
-  if (!response || !response.status) return [];
-  return response[key] || response.data || [];
-};
-
-export const fetchBanners = createAsyncThunk("banners/fetchBanners", async (_, { rejectWithValue }) => {
-  try {
-    const response = await client.get("/ecommerce/banners/?sequence=Upper");
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || error.message);
-  }
-});
-
-export const fetchUpperSection = createAsyncThunk("home/fetchUpperSection", async (_, { rejectWithValue }) => {
-  try {
-    const response = await client.get("/himalayanmountain-section/?type=upper");
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || error.message);
-  }
-});
-
-export const fetchSkinglowSection = createAsyncThunk("home/fetchSkinglowSection", async (_, { rejectWithValue }) => {
-  try {
-    const response = await client.get("/himalayanmountain-section/?type=product");
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || error.message);
-  }
-});
-
-export const fetchLowerSection = createAsyncThunk("home/fetchLowerSection", async (_, { rejectWithValue }) => {
-  try {
-    const response = await client.get("/himalayanmountain-section/?type=lower");
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || error.message);
-  }
-});
-export const fetchNewarrival = createAsyncThunk("home/fetchNewarrival", async (_, { rejectWithValue }) => {
-  try {
-    const response = await client.get("/newarrival/list");
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || error.message);
-  }
-});
-
-
-export const fetchMusttry = createAsyncThunk("home/fetchMusttry", async (_, { rejectWithValue }) => {
-  try {
-    const response = await client.get("/musttry/list");
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || error.message);
-  }
-});
-export const fetchBestofalltime = createAsyncThunk("home/fetchBestofalltime", async (_, { rejectWithValue }) => {
-  try {
-    const response = await client.get("/bestofalltime/list");
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || error.message);
-  }
-});
-
-export const fetchBlogs = createAsyncThunk("home/fetchBlogs", async (_, { rejectWithValue }) => {
-  try {
-    const response = await client.get("/home/blogs/");
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || error.message);
-  }
-});
-export const fetchStatistics = createAsyncThunk("home/fetchStatistics", async (_, { rejectWithValue }) => {
-  try {
-    const response = await client.get("/statistics-section/");
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || error.message);
-  }
-});
-export const fetchLower = createAsyncThunk("home/fetchLower", async (_, { rejectWithValue }) => {
-  try {
-    const response = await client.get("/lower-section/");
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || error.message);
-  }
-});
-
 
 const bannerSlice = createSlice({
   name: "banners",
@@ -135,77 +87,56 @@ const bannerSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchBanners.fulfilled, (state, action) => {
-        if (action.payload.status === true) {
-          state.banners = getResponseData(action.payload, "banner");
-        }
+      .addCase(initializeAppData.pending, (state) => {
+        state.loader = true
       })
-      .addCase(fetchUpperSection.fulfilled, (state, action) => {
-        if (action.payload.status === true) {
-          const data = getResponseData(action.payload, "data");
-          state.upperSection = {
-            aboutSection: data.filter((section) => section.id === 1),
-            certificateSection: data.filter((section) => section.id === 2),
-          };
-        }
+      .addCase(initializeAppData.fulfilled, (state, action) => {
+        state.loader = false;
+        const {
+          banners,
+          upperSection,
+          newArrival,
+          mustTry,
+          bestSeller,
+          lowerSection,
+          blogs,
+          statistics,
+          lowerMostSection,
+          skinSection,
+        } = action.payload;
+        state.hasFetched = true;
+        state.banners = banners;
+        state.bestSeller = bestSeller;
+        state.blogs = blogs;
+        state.mustTry = mustTry;
+        state.newArrival = newArrival;
+        state.statistics = statistics;
+        state.upperSection = {
+          aboutSection: upperSection.filter((section) => section.id === 1),
+          certificateSection: upperSection.filter((section) => section.id === 2),
+        };
+        state.skinSection = {
+          glowingSkinSection: skinSection.filter((section) => section.id === 3),
+          featuredProductsSection: skinSection.filter((section) => section.id === 4),
+          appleCiderSection: skinSection.filter((section) => section.id === 6),
+        };
+        state.lowerSection = {
+          ethicalTeaSection: lowerSection.filter((section) => section.id === 5),
+          cupOfTeaSection: lowerSection.filter((section) => section.id === 7),
+          informativeSection: lowerSection.filter((section) => section.id === 8),
+          licencesSection: lowerSection.filter((section) => section.id === 9),
+          nonGMOSection: lowerSection.filter((section) => section.id === 10),
+        };
+        state.lowerMostSection = {
+          awardsSection: lowerMostSection.filter((section) => section.id === 1),
+          servicesSection: lowerMostSection.filter((section) => section.id === 2),
+          availableSection: lowerMostSection.filter((section) => section.id === 3),
+        };
+
       })
-      .addCase(fetchSkinglowSection.fulfilled, (state, action) => {
-        if (action.payload.status === true) {
-          const data = getResponseData(action.payload, "data");
-          state.skinSection = {
-            glowingSkinSection: data.filter((section) => section.id === 3),
-            featuredProductsSection: data.filter((section) => section.id === 4),
-            appleCiderSection: data.filter((section) => section.id === 6),
-          };
-        }
-      })
-      .addCase(fetchLowerSection.fulfilled, (state, action) => {
-        if (action.payload.status === true) {
-          const data = getResponseData(action.payload, "data");
-          state.lowerSection = {
-            ethicalTeaSection: data.filter((section) => section.id === 5),
-            cupOfTeaSection: data.filter((section) => section.id === 7),
-            informativeSection: data.filter((section) => section.id === 8),
-            licencesSection: data.filter((section) => section.id === 9),
-            nonGMOSection: data.filter((section) => section.id === 10),
-          };
-        }
-      })
-      .addCase(fetchBlogs.fulfilled, (state, action) => {
-        if (action.payload.status === true) {
-          state.blogs = getResponseData(action.payload, "blogs");
-        }
-      })
-      .addCase(fetchNewarrival.fulfilled, (state, action) => {
-        if (action.payload.status === true) {
-          state.newArrival = action.payload.data || [];  
-        }
-      })
-      
-      .addCase(fetchMusttry.fulfilled, (state, action) => {
-        if (action.payload.status === true) {
-          state.mustTry = action.payload.data || [];  
-        }
-      })
-      .addCase(fetchBestofalltime.fulfilled, (state, action) => {
-        if (action.payload.status === true) {
-          state.bestSeller = action.payload.data || [];  
-        }
-      })
-      .addCase(fetchStatistics.fulfilled, (state, action) => {
-        if (action.payload.status === true) {
-          state.statisticsSection= action.payload.data || [];  
-        }
-      })
-      .addCase(fetchLower.fulfilled, (state, action) => {
-        if (action.payload.status === true) {
-          const data = getResponseData(action.payload, "data");
-          state.lowerMostSection = {
-            awardsSection: data.filter((section) => section.id === 1),
-            servicesSection: data.filter((section) => section.id === 2),
-            availableSection: data.filter((section) => section.id === 3),
-          };
-        }
+      .addCase(initializeAppData.rejected, (state, action) => {
+        state.loader = false;
+        state.error = action.payload;
       })
   },
 });
