@@ -24,19 +24,20 @@ import CarouselOurVaidhya from "../components/CarouselOurVaidhya";
 import ScrollToTop from "../components/ScrollToTop";
 import { useLocation } from "react-router-dom";
 import LoginModal from "../components/LoginModal";
+import MetaTags from "../context/MetaTagsContext";
 
 
 
 export default function ConsultOurVaidya() {
   let { search } = useLocation();
-    const searchParams = new URLSearchParams(search);
-   const IsMobileView = searchParams.get("mobile") ?? "false";
-   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const searchParams = new URLSearchParams(search);
+  const IsMobileView = searchParams.get("mobile") ?? "false";
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const toast = useToast();
   const navigate = useNavigate();
 
-  const height = useBreakpointValue({md:450})
+  const height = useBreakpointValue({ md: 450 })
 
   function navigateToBooking() {
     const loginInfo = checkLogin();
@@ -118,8 +119,12 @@ export default function ConsultOurVaidya() {
   ];
   const [loading, setLoading] = useState(false);
   const [banners, setBanners] = useState(SecondCarousel);
+  const pageUrl = "/consult-our-vaidya";
+
   return (
     <>
+      <MetaTags pageUrl={pageUrl} />
+
       {IsMobileView !== "true" && <Navbar />}
 
       <Container maxW="container.xl">
@@ -169,7 +174,7 @@ export default function ConsultOurVaidya() {
           justifyContent="center"
           alignItems="center"
           py={20}
-          h={{lg:"600px",md:"350px"}}
+          h={{ lg: "600px", md: "350px" }}
           w={"100%"}
           mb={10}
         >
@@ -198,13 +203,13 @@ export default function ConsultOurVaidya() {
             bg="rgba(0, 0, 0, 0.5)"
           />
 
-          <Text color={"#fff"} textAlign={"center"} zIndex={3} fontSize={{lg:"5xl",md:"2xl"}}>
+          <Text color={"#fff"} textAlign={"center"} zIndex={3} fontSize={{ lg: "5xl", md: "2xl" }}>
             Get Free Consultation with our Vaidya for Gau Adharit Diagnosis
           </Text>
         </Box>
       </Container>
       <Container maxW={"6xl"} py={15}  >
-        <Flex flexDirection={{base:"column",lg:"row"}}>
+        <Flex flexDirection={{ base: "column", lg: "row" }}>
           <Flex direction={"column"} justify={"center"}>
             <Box my="1">
               <Text fontSize={"2xl"}>
@@ -261,11 +266,11 @@ export default function ConsultOurVaidya() {
         <Box>
           <Text fontSize={"2xl"}>Consult With our Specialist Vaidya</Text>
 
-          <Container maxW={"container.xl"}  centerContent>
+          <Container maxW={"container.xl"} centerContent>
             {loading === true ? (
               <Skeleton h={489}></Skeleton>
             ) : (
-              <CarouselItem banners={SecondCarousel}  />
+              <CarouselItem banners={SecondCarousel} />
             )}
           </Container>
         </Box>
@@ -277,7 +282,7 @@ export default function ConsultOurVaidya() {
             </Text>
           </Box>
         </Flex>
-        <Flex py="8" flexDirection={{base:"column",lg:"row"}}>
+        <Flex py="8" flexDirection={{ base: "column", lg: "row" }}>
           <Box py="3">
             <Image
               src={
@@ -293,7 +298,7 @@ export default function ConsultOurVaidya() {
             />
           </Box>
         </Flex>
-        <Flex py="8" flexDirection={{base:"column",lg:"row"}}>
+        <Flex py="8" flexDirection={{ base: "column", lg: "row" }}>
           <Box py="3">
             <Image
               src={
@@ -309,7 +314,7 @@ export default function ConsultOurVaidya() {
             />
           </Box>
         </Flex>
-        <Flex py="8" flexDirection={{base:"column",lg:"row"}}>
+        <Flex py="8" flexDirection={{ base: "column", lg: "row" }}>
           <Box py="3">
             <Image
               src={
@@ -325,7 +330,7 @@ export default function ConsultOurVaidya() {
             />
           </Box>
         </Flex>
-        <Flex py="8" flexDirection={{base:"column",lg:"row"}}>
+        <Flex py="8" flexDirection={{ base: "column", lg: "row" }}>
           <Box py="3">
             <Image
               src={
@@ -341,8 +346,8 @@ export default function ConsultOurVaidya() {
             />
           </Box>
         </Flex>
-        </Container>
-        <Container maxW={"container.xl"} py={15} px={{base:6,md:"4%"}} >
+      </Container>
+      <Container maxW={"container.xl"} py={15} px={{ base: 6, md: "4%" }} >
         <Heading fontSize={"27px"} textAlign={"center"} color={"text.500"}>
           OUR VAIDYA VIDEO
         </Heading>
@@ -354,7 +359,7 @@ export default function ConsultOurVaidya() {
           }}
           gap={7}
           my={6}
-         
+
         >
           <GridItem>
             <iframe
@@ -401,8 +406,8 @@ export default function ConsultOurVaidya() {
             </Button>
           </GridItem>
         </Grid>
-        </Container>
-        <Container maxW={"6xl"} py={15} >
+      </Container>
+      <Container maxW={"6xl"} py={15} >
         <Flex m={"10"}>
           <Image
             src={
@@ -410,11 +415,11 @@ export default function ConsultOurVaidya() {
             }
           />
         </Flex>
-        </Container>
-        <Container maxW={"container.xl"} backgroundColor={"gray.100"} px={0}>
+      </Container>
+      <Container maxW={"container.xl"} backgroundColor={"gray.100"} px={0}>
         <CarouselOurVaidhya />
-        </Container>
-        <Container maxW={"6xl"} py={15} >
+      </Container>
+      <Container maxW={"6xl"} py={15} >
         <Flex my={"10"} align="center" justify="center">
           <Box>
             <Image
@@ -448,10 +453,10 @@ export default function ConsultOurVaidya() {
       </Container>
       <Box
         w="100%"
-        /*  backgroundImage={"https://forntend-bucket.s3.ap-south-1.amazonaws.com/sose/images/HomePage/line.png"}
-          backgroundSize="100%"
-          backgroundPosition="50% 100%"
-          backgroundRepeat={"no-repeat"} */
+      /*  backgroundImage={"https://forntend-bucket.s3.ap-south-1.amazonaws.com/sose/images/HomePage/line.png"}
+        backgroundSize="100%"
+        backgroundPosition="50% 100%"
+        backgroundRepeat={"no-repeat"} */
       >
         <Heading
           color="brand.500"
@@ -483,7 +488,7 @@ export default function ConsultOurVaidya() {
           onClose={() => setIsLoginModalOpen(false)}
         />
       )}
-      <ScrollToTop/>
+      <ScrollToTop />
       {IsMobileView !== "true" && <Footer />}
 
 

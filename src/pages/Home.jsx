@@ -33,7 +33,7 @@ import {
 } from "@chakra-ui/react";
 import client from "../setup/axiosClient";
 import CheckOrSetUDID from "../utils/checkOrSetUDID";
-import { useNavigate, NavLink as RouterLink,Link as ReactRouterLink } from "react-router-dom";
+import { useNavigate, NavLink as RouterLink, Link as ReactRouterLink } from "react-router-dom";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import Testimonials from "../components/testimonials";
 import { info } from "sass";
@@ -43,6 +43,10 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import CountUp from "react-countup";
 import ScrollTrigger from "react-scroll-trigger";
+import { Helmet } from "react-helmet";
+import MetaHome from "../components/MetaHome";
+
+
 
 export default function Home() {
   const [isFullScreen] = useMediaQuery("(min-width: 768px)");
@@ -103,9 +107,23 @@ export default function Home() {
       dispatch(initializeAppData());
     }
   }, [dispatch, hasFetched]);
-
+  const pageUrl = "/";
   return (
     <>
+      <MetaHome pageUrl={pageUrl} />
+      {/* <Helmet>
+        <title>Himalayan Mountain - Home</title> 
+        <meta
+          name="description"
+          content=""
+        />
+      </Helmet> */}
+      {/* {loading === true ? (
+        <Center h="100vh" w="100vw" backgroundColor={"bg.500"}>
+          <Loader site={true} />
+        </Center>
+      ) : (
+        <> */}
       <Navbar />
       <Container maxW={"container.xl"} px={0}>
         {loader === true ? (
@@ -460,7 +478,7 @@ export default function Home() {
           ))}
         </Grid>
       </Container>
-      
+
       {statistics?.length > 0 && (
         <Container backgroundColor={"bg.500"} maxW={"container.xl"} py={2}>
           <SimpleGrid
@@ -475,23 +493,23 @@ export default function Home() {
           >
             {statistics?.length > 0 &&
               statistics?.map((data, index) => (
-          <Stat key={data.id}>
-            <StatNumber fontSize={{ base: "3xl", md: "3xl" }} color="gray.600">
-              <ScrollTrigger onEnter={() => setCountUp(true)}>
-                {countUp ? (
-                  <CountUp
-                    start={0}
-                    end={Number(data.value.replace(/[^\d]/g, ""))}
-                    duration={4}
-                    delay={0}
-                  />
-                ) : null}
-                {index === statistics.length - 1 ? "th" : "+"}
-              </ScrollTrigger>
-            </StatNumber>
-            <StatHelpText color="gray.600">{data?.name}</StatHelpText>
-          </Stat>
-        ))}
+                <Stat key={data.id}>
+                  <StatNumber fontSize={{ base: "3xl", md: "3xl" }} color="gray.600">
+                    <ScrollTrigger onEnter={() => setCountUp(true)}>
+                      {countUp ? (
+                        <CountUp
+                          start={0}
+                          end={Number(data.value.replace(/[^\d]/g, ""))}
+                          duration={4}
+                          delay={0}
+                        />
+                      ) : null}
+                      {index === statistics.length - 1 ? "th" : "+"}
+                    </ScrollTrigger>
+                  </StatNumber>
+                  <StatHelpText color="gray.600">{data?.name}</StatHelpText>
+                </Stat>
+              ))}
           </SimpleGrid>
         </Container>
       )}

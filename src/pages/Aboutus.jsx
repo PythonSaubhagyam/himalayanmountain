@@ -1,15 +1,20 @@
 import Footer from "../components/Footer";
 import BreadCrumbCom from "../components/BreadCrumbCom";
 import Navbar from "../components/Navbar";
-import { Box, Container, VStack, Image, Text,Heading } from "@chakra-ui/react";
+import { Box, Container, VStack, Image, Text, Heading } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
+import MetaTags from "../context/MetaTagsContext";
 const Aboutus = () => {
   let { search } = useLocation();
   const searchParams = new URLSearchParams(search);
   const IsMobileView = searchParams.get("mobile") ?? "false";
+  const pageUrl = "/about-us";
+
   return (
     <>
+      <MetaTags pageUrl={pageUrl} />
+
       {IsMobileView !== "true" && <Navbar />}
       <Container maxW={"container.xl"} alignContent={"flex-start"}>
         <BreadCrumbCom second={"About Us"} secondUrl={"/about-us"} />{" "}
@@ -32,7 +37,7 @@ const Aboutus = () => {
             Our Mission & Vision
           </Box>
 
-          <Box maxW={"6xl"} color={"text.300"} textAlign={"justify"} px={{base:9}}>
+          <Box maxW={"6xl"} color={"text.300"} textAlign={"justify"} px={{ base: 9 }}>
             When you buy this blend , you also support ethical farming
             practices, and farmers who work hard under tough hilly or
             mountainous conditions to bring you authentic products without
@@ -80,48 +85,48 @@ const Aboutus = () => {
             maxW={"6xl"}
             fontWeight={"600"}
             color="text.500"
-            px={{base:9}}
+            px={{ base: 9 }}
             fontSize={{ base: "20px", lg: "32px" }}
           >
             How Is Himalayan Mountain Tea Produced?
           </Box>
-         
-         <Image src={require("../assets/aboutus/how to precroes tea.jpg")} w={"70%"} />
-         <Box
-          w="100%"
-        
-          backgroundSize="100%"
-          backgroundPosition="50% 100%"
-          backgroundRepeat={"no-repeat"}
-        >
-          <Heading
-            color="brand.500"
-            size="lg"
-            mx="auto"
-            align={"center"}
-            my={"5"}
-            pb={"10px"}
+
+          <Image src={require("../assets/aboutus/how to precroes tea.jpg")} w={"70%"} />
+          <Box
+            w="100%"
+
+            backgroundSize="100%"
+            backgroundPosition="50% 100%"
+            backgroundRepeat={"no-repeat"}
           >
-            AVAILABLE AT
-          </Heading>
-        </Box>
-     
+            <Heading
+              color="brand.500"
+              size="lg"
+              mx="auto"
+              align={"center"}
+              my={"5"}
+              pb={"10px"}
+            >
+              AVAILABLE AT
+            </Heading>
+          </Box>
+
           <Image
-           src={
-            require("../assets/001.jpg")
-          }
-            
+            src={
+              require("../assets/001.jpg")
+            }
+
             alt=""
             style={{
               opacity: 1,
               transition: "opacity 0.7s", // Note the corrected syntax here
             }}
           />
-        </VStack> 
-       
-        
+        </VStack>
+
+
       </Container>
-      <ScrollToTop/>
+      <ScrollToTop />
       {IsMobileView !== "true" && <Footer />}
     </>
   );

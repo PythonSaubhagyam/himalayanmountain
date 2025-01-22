@@ -37,6 +37,7 @@ import BreadCrumbCom from "../components/BreadCrumbCom";
 import { Select } from "chakra-react-select";
 import CapitalizeLetter from "../utils/CommanFunction";
 import ScrollToTop from "../components/ScrollToTop";
+import MetaTags from "../context/MetaTagsContext";
 
 // import Paginator from "../components/Paginator";
 
@@ -84,8 +85,9 @@ export default function Shop() {
     (state) => state.shop
   );
   
+
   const loginInfo = checkLogin();
-  
+
   let name = [
     localStorage.getItem("first_name"),
     localStorage.getItem("last_name"),
@@ -95,7 +97,7 @@ export default function Shop() {
     const init = async () => {
       await CheckOrSetUDID();
     };
-  
+
     init();
     //CheckOrSetUDID();
     getProducts(); // eslint-disable-next-line
@@ -114,9 +116,9 @@ export default function Shop() {
     try {
       let params = categoryId
         ? {
-            page: nextPage ? nextPage : page,
-            category_id: categoryId,
-          }
+          page: nextPage ? nextPage : page,
+          category_id: categoryId,
+        }
         : { page: nextPage ? nextPage : page };
 
       if (sortKey !== null) {
@@ -211,9 +213,9 @@ export default function Shop() {
 
     if (categoryId) {
       params.category = categoryId;
-      
+
     }
-    if(category_name){
+    if (category_name) {
       params.category_name = category_name;
     }
     if (searchPar.get("brand")) {
@@ -226,8 +228,8 @@ export default function Shop() {
     }
 
     setSearchParams(params);
-   
-  }, [sortKey,tagWise, productFoam]);
+
+  }, [sortKey, tagWise, productFoam]);
 
 
   async function handlePageChange(nextPage) {
@@ -264,8 +266,12 @@ export default function Shop() {
       setProducts(temp);
     }
   };
+  const pageUrl = "/shop";
+
   return (
     <>
+      <MetaTags pageUrl={pageUrl} />
+
       <Navbar />
       <Container maxW="container.xl">
         <BreadCrumbCom second={"Shop"} secondUrl={"/shop"} />
@@ -279,7 +285,7 @@ export default function Shop() {
           align="center"
           mb={6}
         >
-          {brand_name ? brand_name : category_name ? category_name :`All Products`}
+          {brand_name ? brand_name : category_name ? category_name : `All Products`}
         </Heading>
 
         <Flex
