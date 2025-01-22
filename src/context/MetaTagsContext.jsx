@@ -61,7 +61,8 @@ const MetaTags = ({ pageUrl }) => {
       <title>Himalayan Mountain</title>
       <meta
         name="description"
-        content=""
+        content="Explore the health benefits and refreshing 
+        flavors of ethically sourced Himalayan herbal teas for enhanced wellness."
       />
       <meta name="keywords" content="" />
     </Helmet>

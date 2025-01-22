@@ -26,7 +26,7 @@ const MetaHome = ({ pageUrl }) => {
 
     return (
         <Helmet>
-            <title>{meta?.title || 'Himalayan | Home'}</title>
+            <title>{meta?.title || 'Himalayan Mountain| Home'}</title>
             <meta name="description" content={meta?.description} />
             <meta name="keywords" content={meta?.keywords} />
         </Helmet>
