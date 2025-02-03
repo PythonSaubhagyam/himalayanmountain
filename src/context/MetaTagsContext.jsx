@@ -64,7 +64,6 @@ const MetaTags = ({ pageUrl }) => {
         content="Explore the health benefits and refreshing 
         flavors of ethically sourced Himalayan herbal teas for enhanced wellness."
       />
-      <meta name="keywords" content="" />
     </Helmet>
   );
 };

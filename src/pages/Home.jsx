@@ -79,6 +79,11 @@ export default function Home() {
     hasFetched
   } = useSelector((state) => state.banners);
 
+  const statisticsReverse = [
+    statistics[statistics.length - 1],
+    ...statistics.slice(0, statistics.length - 1),
+  ];
+
   const { aboutSection, certificateSection } = upperSection;
   const { glowingSkinSection, featuredProductsSection, appleCiderSection } =
     skinSection;
@@ -479,7 +484,8 @@ export default function Home() {
         </Grid>
       </Container>
 
-      {statistics?.length > 0 && (
+
+      {statisticsReverse?.length > 0 && (
         <Container backgroundColor={"bg.500"} maxW={"container.xl"} py={2}>
           <SimpleGrid
             columns={[2, 3, null, 6]}
@@ -491,21 +497,11 @@ export default function Home() {
             spacingX={{ base: "10vw", md: "30px" }}
             spacingY="40px"
           >
-            {statistics?.length > 0 &&
-              statistics?.map((data, index) => (
-                <Stat key={data.id}>
-                  <StatNumber fontSize={{ base: "3xl", md: "3xl" }} color="gray.600">
-                    <ScrollTrigger onEnter={() => setCountUp(true)}>
-                      {countUp ? (
-                        <CountUp
-                          start={0}
-                          end={Number(data.value.replace(/[^\d]/g, ""))}
-                          duration={4}
-                          delay={0}
-                        />
-                      ) : null}
-                      {index === statistics.length - 1 ? "th" : "+"}
-                    </ScrollTrigger>
+            {statisticsReverse?.length > 0 &&
+              statisticsReverse?.map((data) => (
+                <Stat>
+                  <StatNumber fontSize={{ base: "3xl", md: "3xl" }} color="gray.600" >
+                    {data?.value}
                   </StatNumber>
                   <StatHelpText color="gray.600">{data?.name}</StatHelpText>
                 </Stat>
