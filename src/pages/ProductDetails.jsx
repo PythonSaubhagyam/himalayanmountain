@@ -31,6 +31,7 @@ import {
   FormControl,
   FormLabel,
   Textarea,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { AiFillHeart, AiFillStar } from "react-icons/ai";
 import { FaShoppingCart } from "react-icons/fa";
@@ -94,6 +95,8 @@ export default function ProductDetails() {
     rating: 1,
     review: null,
   });
+  const [isMobile] = useMediaQuery("(max-width: 1024px)");
+
   const [productData, setProductData] = useState(null);
   const [avgRating, setAvgRating] = useState(null);
   const [nobenefits, setNoBenefits] = useState("");
@@ -743,7 +746,7 @@ export default function ProductDetails() {
                     mx="auto"
                     mt={4}
                     colorScheme="brand"
-                    onClick={() => navigate(`/products/${productId}/reviews`)}
+                    onClick={() => navigate(`/products/${productId}/reviews/${productData?.name.replace(/\s+/g, "-")}`)}
                   >
                     View all reviews
                   </Button>
@@ -752,32 +755,39 @@ export default function ProductDetails() {
             </Container>
           )}
 
-          <ProductListSection
-            title="Related Products"
-            products={relatedProducts}
-            loading={loading}
-            justify="center"
-            fontSize={{ base: "sm", lg: "md" }}
-            type={"carousal"}
-          />
-
-          <ProductListSection
-            title="Other Products"
-            products={otherProducts}
-            justify="center"
-            loading={loading}
-            fontSize={{ base: "sm", lg: "md" }}
-            type={"carousal"}
-          />
-
-          <ProductListSection
-            title="Recently Viewed Products"
-            products={recentlyViewedProducts}
-            justify="center"
-            loading={loading}
-            fontSize={{ base: "sm", lg: "md" }}
-            type={"carousal"}
-          />
+          {relatedProducts &&
+            relatedProducts?.length > 0 && (
+              <ProductListSection
+                title="Related Products"
+                products={relatedProducts}
+                loading={loading}
+                justify="center"
+                fontSize={{ base: "sm", lg: "md" }}
+                type={isMobile && "carousal"}
+              />
+            )}
+          {otherProducts &&
+            otherProducts?.length > 0 && (
+              <ProductListSection
+                title="Other Products"
+                products={otherProducts}
+                justify="center"
+                loading={loading}
+                fontSize={{ base: "sm", lg: "md" }}
+                type={isMobile && "carousal"}
+              />
+            )}
+          {recentlyViewedProducts &&
+            recentlyViewedProducts?.length > 0 && (
+              <ProductListSection
+                title="Recently Viewed Products"
+                products={recentlyViewedProducts}
+                justify="center"
+                loading={loading}
+                fontSize={{ base: "sm", lg: "md" }}
+                type={"carousal"}
+              />
+            )}
 
           <Modal
             size={"xl"}

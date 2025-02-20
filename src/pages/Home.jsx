@@ -45,6 +45,7 @@ import CountUp from "react-countup";
 import ScrollTrigger from "react-scroll-trigger";
 import { Helmet } from "react-helmet";
 import MetaHome from "../components/MetaHome";
+import BlogSliderHome from "../components/BlogSliderHome";
 
 
 
@@ -54,7 +55,7 @@ export default function Home() {
   const height = useBreakpointValue({ base: "200", lg: "400" });
   const [isMobile] = useMediaQuery("(max-width: 480px)");
   const [sections, setSections] = useState([]);
-  const [countUp, setCountUp] = useState();
+  const [countUp, setCountUp] = useState(false);
   const loginInfo = checkLogin();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const checkOrSetUDIDInfo = CheckOrSetUDID();
@@ -79,10 +80,7 @@ export default function Home() {
     hasFetched
   } = useSelector((state) => state.banners);
 
-  const statisticsReverse = [
-    statistics[statistics.length - 1],
-    ...statistics.slice(0, statistics.length - 1),
-  ];
+ 
 
   const { aboutSection, certificateSection } = upperSection;
   const { glowingSkinSection, featuredProductsSection, appleCiderSection } =
@@ -237,7 +235,7 @@ export default function Home() {
               onClick={() => {
                 if (glowingSkinSection[0]?.images[0]?.product !== null) {
                   navigate(
-                    `/products/${glowingSkinSection[0]?.images[0]?.product}`
+                    `/products/${glowingSkinSection[0]?.images[0]?.product}/${glowingSkinSection[0]?.images[0]?.product_name.replace(/\s+/g, "-")}`
                   );
                 }
               }}
@@ -276,7 +274,7 @@ export default function Home() {
                       src={data.image}
                       onClick={() => {
                         if (data?.product !== null) {
-                          navigate(`/products/${data.product}`);
+                          navigate(`/products/${data.product}/${data.product_name.replace(/\s+/g, "-")}`);
                         }
                       }}
                       cursor={"pointer"}
@@ -331,16 +329,15 @@ export default function Home() {
           title="Try Our New Products"
           loading={loader}
           products={newArrival}
-          type={isMobile && "carousal"}
+          type={"carousal"}
         />
       )}
-
       {mustTry && mustTry?.length > 0 && (
         <ProductListSectionHome
           title="Must Try: Himalayan Mountain Products"
           loading={loader}
           products={mustTry}
-          type={isMobile && "carousal"}
+          type={"carousal"}
         />
       )}
       {bestSeller && bestSeller?.length > 0 && (
@@ -348,7 +345,7 @@ export default function Home() {
           title="All Time Best Sellers"
           loading={loader}
           products={bestSeller}
-          type={isMobile && "carousal"}
+          type={"carousal"}
         />
       )}
 
@@ -362,7 +359,7 @@ export default function Home() {
               }
               onClick={() => {
                 if (appleCiderSection[0]?.images[0]?.product !== null) {
-                  navigate("/products/1550");
+                  navigate(`/products/${appleCiderSection[0]?.images[0]?.product}/${appleCiderSection[0]?.images[0]?.product_name.replace(/\s+/g, "-")}`);
                 }
               }}
               cursor={"pointer"}
@@ -419,73 +416,10 @@ export default function Home() {
             </Grid>
           </Container>
         )}
-      <Container maxW={"container.xl"}>
-        <Heading color="brand.500" size="lg" mx="auto" align={"center"} mt={3}>
-          BLOGS
-        </Heading>
+      
+      <BlogSliderHome blogs={blogs} />
 
-        <Grid
-          templateColumns={{
-            base: "repeat(1,1fr)",
-            md: "repeat(2,1fr)",
-            lg: "repeat(4,1fr)",
-          }}
-          px={2}
-          py={3}
-          spacing="40px"
-        >
-          {blogs?.slice(0, 8).map((blog) => (
-            <GridItem key={blog.id} m={4}>
-              <Card>
-                <LinkBox h={400}>
-                  <Image
-                    src={blog.banner}
-                    w="100%"
-                    h="300px"
-                    loading="lazy"
-                    objectFit={"cover"}
-                    borderRadius={5}
-                    style={{
-                      opacity: 1,
-                      transition: "opacity 0.7s", // Note the corrected syntax here
-                    }}
-                  />
-                  <LinkOverlay
-                    _hover={{ color: "text.500" }}
-                    as={ReactRouterLink}
-                    to={`/blogs/${blog.id}/`}
-                  >
-                    <Heading size="sm" fontWeight={500} m={2}>
-                      {blog.title}
-                    </Heading>
-                  </LinkOverlay>
-                </LinkBox>
-                <Flex m={2} justifyContent={"space-between"}>
-                  <Text fontSize={"sm"} color="gray.500">
-                    {new Intl.DateTimeFormat("en-CA", {
-                      dateStyle: "long",
-                      timeZone: "Asia/Kolkata",
-                    }).format(new Date(blog.published_at))}
-                  </Text>
-                  <Text
-                    fontSize={"sm"}
-                    fontWeight={600}
-                    color={"brand.500"}
-                    onClick={() => navigate(`/blogs/${blog.id}/`)}
-                    cursor={"pointer"}
-                  >
-                    Read more
-                    <ChevronRightIcon />
-                  </Text>
-                </Flex>
-              </Card>
-            </GridItem>
-          ))}
-        </Grid>
-      </Container>
-
-
-      {statisticsReverse?.length > 0 && (
+      {statistics?.length > 0 && (
         <Container backgroundColor={"bg.500"} maxW={"container.xl"} py={2}>
           <SimpleGrid
             columns={[2, 3, null, 6]}
@@ -497,12 +431,25 @@ export default function Home() {
             spacingX={{ base: "10vw", md: "30px" }}
             spacingY="40px"
           >
-            {statisticsReverse?.length > 0 &&
-              statisticsReverse?.map((data) => (
+            {statistics?.length > 0 &&
+              statistics?.map((data) => (
                 <Stat>
-                  <StatNumber fontSize={{ base: "3xl", md: "3xl" }} color="gray.600" >
-                    {data?.value}
-                  </StatNumber>
+                <StatNumber
+                      color="text.300"
+                      fontSize={{ base: "3xl", md: "3xl" }}
+                    >
+                      <ScrollTrigger onEnter={() => setCountUp(true)}>
+                        {countUp ? (
+                          <CountUp
+                            start={0}
+                            end={Number(data.value.replace(/[^\d]/g, ""))}
+                            duration={1}
+                            delay={0}
+                          />
+                        ) : null}
+                        {data?.name === "Positive Feedback" ? "%+" : "+"}
+                      </ScrollTrigger>
+                    </StatNumber>
                   <StatHelpText color="gray.600">{data?.name}</StatHelpText>
                 </Stat>
               ))}
