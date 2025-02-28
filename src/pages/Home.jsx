@@ -443,11 +443,11 @@ export default function Home() {
                           <CountUp
                             start={0}
                             end={Number(data.value.replace(/[^\d]/g, ""))}
-                            duration={1}
+                            duration={3}
                             delay={0}
                           />
                         ) : null}
-                        {data?.name === "Positive Feedback" ? "%+" : "+"}
+                        {data?.name === "Positive Feedback" ? "+%" : data?.name === "Generation of Farmers" ? "th" : "+"}
                       </ScrollTrigger>
                     </StatNumber>
                   <StatHelpText color="gray.600">{data?.name}</StatHelpText>
