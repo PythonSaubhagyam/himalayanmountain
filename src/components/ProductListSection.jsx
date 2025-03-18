@@ -175,7 +175,7 @@ export default function ProductListSection({ title, products, type, loading }) {
         }
         <Container maxW={"container.xl"} px={10}>
 
-          {type === "carousal" && products.length > 3 ? (
+          {type === "carousal" && products.length > 4 ? (
             <Slider {...settings} ref={(slider) => setSlider(slider)}>
               {loading === true
                 ? [0, 1, 2, 3, 4].map((index) => (
