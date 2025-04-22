@@ -17,6 +17,7 @@ import CheckOrSetUDID from "../utils/checkOrSetUDID";
 import checkLogin from "../utils/checkLogin";
 
 const CartPopUp = () => {
+  const [productPrice, setProductPrice] = useState()
   const [CartCount, setCartCount] = useState(
     localStorage.getItem("cart_counter") ?? 0
   );
@@ -31,7 +32,7 @@ const CartPopUp = () => {
 
   const [total, setTotal] = useState(
     localStorage.getItem("product_total") === null ||
-    localStorage.getItem("product_total") === undefined
+      localStorage.getItem("product_total") === undefined
       ? 0
       : localStorage.getItem("product_total")
   );
@@ -52,6 +53,8 @@ const CartPopUp = () => {
         setCartCount(cartRes.data.data.cart_counter);
         localStorage.setItem("product_total", cartRes.data.data.final_total);
         setTotal(cartRes.data.data.final_total);
+        setProductPrice(cartRes.data.data.product_price);
+
       }
     };
 
@@ -78,7 +81,9 @@ const CartPopUp = () => {
           localStorage.setItem("cart_counter", cartRes.data.data.cart_counter);
           localStorage.setItem("product_total", cartRes.data.data.final_total);
           setTotal(cartRes.data.data.final_total);
-        }else {
+          setProductPrice(cartRes.data.data.product_price);
+
+        } else {
           // Clear cart state if no items
           setCartCount(0);
           localStorage.removeItem("product_total");
@@ -131,7 +136,7 @@ const CartPopUp = () => {
             opacity={0.9}
             fontSize={13}
           >
-            
+
           </Box>
         ) : (
           <Box
@@ -172,7 +177,12 @@ const CartPopUp = () => {
           </Flex>
           <Flex gap={2} mt={1} alignItems={"center"}>
             <Text fontSize={17} fontWeight={700}>
-              ₹ {parseFloat(total).toFixed(2) ?? 0}
+              ₹ {(
+                isNaN(productPrice) || productPrice === null
+                  ? parseFloat(total || 0)
+                  : parseFloat(productPrice)
+              ).toFixed(2)}
+
             </Text>
             <Text
               as={Flex}
