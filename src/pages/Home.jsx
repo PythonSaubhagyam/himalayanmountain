@@ -80,7 +80,7 @@ export default function Home() {
     hasFetched
   } = useSelector((state) => state.banners);
 
- 
+
 
   const { aboutSection, certificateSection } = upperSection;
   const { glowingSkinSection, featuredProductsSection, appleCiderSection } =
@@ -156,6 +156,7 @@ export default function Home() {
               </GridItem>
               <GridItem px={{ base: 15, lg: 20 }} colSpan={2}>
                 <Text
+                  as={"h1"}
                   fontSize={{ base: "xl", sm: "2xl", xl: "29px" }}
                   fontWeight={500}
                   color={"text.500"}
@@ -248,6 +249,7 @@ export default function Home() {
         featuredProductsSection[0]?.is_visible_on_website === true && (
           <Container maxW={"container.xl"} px={0}>
             <Text
+              as={"h1"}
               fontSize={{ base: "xl", sm: "2xl", xl: "3xl" }}
               color={"brand.500"}
               textAlign={{ base: "center", md: "start" }}
@@ -288,6 +290,7 @@ export default function Home() {
         ethicalTeaSection[0]?.is_visible_on_website === true && (
           <Container maxW={"container.xl"} py={5} px={0}>
             <Text
+              as={"h1"}
               fontSize={{ base: "xl", sm: "2xl", xl: "3xl" }}
               color={"brand.500"}
               textAlign={{ base: "center", md: "start" }}
@@ -397,6 +400,7 @@ export default function Home() {
                       <Image src={data.image} w={100} />
 
                       <Text
+                      as={"h1"}
                         color={"brand.500"}
                         fontWeight={600}
                         fontSize={"22px"}
@@ -416,7 +420,7 @@ export default function Home() {
             </Grid>
           </Container>
         )}
-      
+
       <BlogSliderHome blogs={blogs} />
 
       {statistics?.length > 0 && (
@@ -434,22 +438,22 @@ export default function Home() {
             {statistics?.length > 0 &&
               statistics?.map((data) => (
                 <Stat>
-                <StatNumber
-                      color="text.300"
-                      fontSize={{ base: "3xl", md: "3xl" }}
-                    >
-                      <ScrollTrigger onEnter={() => setCountUp(true)}>
-                        {countUp ? (
-                          <CountUp
-                            start={0}
-                            end={Number(data.value.replace(/[^\d]/g, ""))}
-                            duration={3}
-                            delay={0}
-                          />
-                        ) : null}
-                        {data?.name === "Positive Feedback" ? "%+" : data?.name === "Generation of Farmers" ? "th" : "+"}
-                      </ScrollTrigger>
-                    </StatNumber>
+                  <StatNumber
+                    color="text.300"
+                    fontSize={{ base: "3xl", md: "3xl" }}
+                  >
+                    <ScrollTrigger onEnter={() => setCountUp(true)}>
+                      {countUp ? (
+                        <CountUp
+                          start={0}
+                          end={Number(data.value.replace(/[^\d]/g, ""))}
+                          duration={3}
+                          delay={0}
+                        />
+                      ) : null}
+                      {data?.name === "Positive Feedback" ? "%+" : data?.name === "Generation of Farmers" ? "th" : "+"}
+                    </ScrollTrigger>
+                  </StatNumber>
                   <StatHelpText color="gray.600">{data?.name}</StatHelpText>
                 </Stat>
               ))}
@@ -461,6 +465,7 @@ export default function Home() {
         awardsSection[0]?.is_visible_on_website === true && (
           <Container maxW={{ base: "100vw", md: "container.xl" }}>
             <Heading
+              as={"h1"}
               color="brand.500"
               fontSize={{ md: 33, base: 20 }}
               mx="auto"
@@ -518,6 +523,7 @@ export default function Home() {
               backgroundRepeat={"no-repeat"}
             >
               <Heading
+                as={"h1"}
                 color="brand.500"
                 fontSize={{ md: 33, base: 24 }}
                 mx="auto"
@@ -562,6 +568,7 @@ export default function Home() {
         servicesSection[0]?.is_visible_on_website === true && (
           <Container maxW={{ base: "100vw", md: "container.xl" }} centerContent>
             <Heading
+              as={"h1"}
               color="brand.500"
               fontSize={{ md: 33, base: 20 }}
               mx="auto"
@@ -593,6 +600,7 @@ export default function Home() {
         availableSection[0]?.is_visible_on_website === true && (
           <Container maxW={"container.xl"} mb={5} px={0} centerContent>
             <Heading
+              as={"h1"}
               color="brand.500"
               fontSize={{ md: 33, base: 22 }}
               mx="auto"
