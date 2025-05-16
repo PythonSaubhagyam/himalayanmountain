@@ -31,6 +31,7 @@ import {
 } from "react-router-dom";
 import Actions from "../components/Actions";
 import MetaTags from "../context/MetaTagsContext";
+import useScrollRestoration from "../utils/useScrollRestoration";
 
 export default function Checkout({ getDetails }) {
   function onEditClick(id, address) {
@@ -59,6 +60,8 @@ export default function Checkout({ getDetails }) {
     shipping_amt:
       localStorage.getItem("is_sose_elite_user") === "true" ? 0 : 100,
   });
+  
+  useScrollRestoration();
 
   const [addresses, setAddresses] = useState([]);
   const [formData, setFormData] = useState(initialFormData);

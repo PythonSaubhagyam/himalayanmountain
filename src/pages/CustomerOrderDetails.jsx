@@ -37,6 +37,7 @@ import {
 } from "@chakra-ui/react";
 import ReactStars from "react-stars";
 import { BsCheck, BsPrinter, BsDownload } from "react-icons/bs";
+import useScrollRestoration from "../utils/useScrollRestoration";
 
 export default function CustomerOrderDetails() {
   const [orderDetails, setOrderDetails] = useState([]);
@@ -54,6 +55,7 @@ export default function CustomerOrderDetails() {
   const { orderId } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+  useScrollRestoration();
   useEffect(() => {
     getOrderDetails(); // eslint-disable-next-line
   }, []);
@@ -138,7 +140,7 @@ export default function CustomerOrderDetails() {
 
   async function handleOnlinePayment() {
     setPayment(true); // Set the payment loading state
-    
+
     const data = {
       order_id: orderDetails.order_id,
       txnid: new Date().getTime().toString(), // Generate a unique transaction ID

@@ -3,12 +3,7 @@ import client from "../setup/axiosClient";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
-import CategoryTree from "../components/CategoryTree";
-import { fetchFilters } from "../redux/slices/shopApi";
-import { useDispatch, useSelector } from "react-redux";
-import { Helmet } from "react-helmet";
-import { fetchCategories } from "../redux/slices/categoryApi";
-// import CategoryAccessTree from "../components/CategoryAccessTree";
+import ScrollToTop from "../components/ScrollToTop";
 import ShopProductCard from "../components/ShopProductCard";
 import {
   Center,
@@ -26,6 +21,8 @@ import AddOrRemoveInWishlist from "../utils/addOrRemoveInWishlist";
 import CheckOrSetUDID from "../utils/checkOrSetUDID";
 import checkLogin from "../utils/checkLogin";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { fetchCategories } from "../redux/slices/categoryApi";
 import {
   Pagination,
   usePagination,
@@ -38,8 +35,10 @@ import {
 import BreadCrumbCom from "../components/BreadCrumbCom";
 import { Select } from "chakra-react-select";
 import CapitalizeLetter from "../utils/CommanFunction";
-import ScrollToTop from "../components/ScrollToTop";
+import { fetchFilters } from "../redux/slices/shopApi";
+import { useDispatch, useSelector } from "react-redux";
 import MetaTags from "../context/MetaTagsContext";
+import useScrollRestoration from "../utils/useScrollRestoration";
 
 // import Paginator from "../components/Paginator";
 
@@ -53,7 +52,8 @@ export default function Shop() {
   const [sortKey, setSortKey] = useState(null);
   const [tagWise, setTagWise] = useState(null);
   const [productFoam, setProductFoam] = useState(null);
-  // const [brandWise, setBrandWise] = useState(null);
+  useScrollRestoration();
+
   const [banners, setBanners] = useState({
     bannerWeb: null,
     bannerMobile: null,
@@ -70,7 +70,10 @@ export default function Shop() {
   const categoryId = searchPar.get("category");
   const prod_search = searchPar.get("search");
   const page = searchPar.get("page") ? searchPar.get("page") : 1;
+  console.log("page", page);
   const [isMobile] = useMediaQuery("(max-width: 768px)");
+  // const [brandWise, setBrandWise] = useState({value:searchPar.get("brand"),label:searchPar.get("brand_name")});
+  // console.log("brandWise",brandWise)
   const brand = searchPar.get("brand");
   const brand_name = searchPar.get("brand_name");
   const { currentPage, setCurrentPage, pages } = usePagination({
@@ -83,40 +86,42 @@ export default function Shop() {
   });
   const category_name = new URLSearchParams(search).get("category_name");
 
-  const dispatch = useDispatch();
-  const { tagsArray, productFoamsArray, brandArray } = useSelector(
-    (state) => state.shop
-  );
-  const { categories } = useSelector((state) => state.category);
-
-
-
+  let headers = { visitor: CheckOrSetUDID()?.visitor_id };
   const loginInfo = checkLogin();
-
+  if (loginInfo.isLoggedIn === true) {
+    headers = { Authorization: `token ${loginInfo.token}` };
+  }
   let name = [
     localStorage.getItem("first_name"),
     localStorage.getItem("last_name"),
   ].join(" ");
 
+  const dispatch = useDispatch();
+  const { tagsArray, productFoamsArray, brandArray, hasFetched } = useSelector((state) => state.shop);
+  const { categories } = useSelector((state) => state.category);
   useEffect(() => {
-    const init = async () => {
-      await CheckOrSetUDID();
-    };
+    if (!hasFetched) {
+      dispatch(fetchFilters());
+      dispatch(fetchCategories());
+    }
+  }, [dispatch, hasFetched]);
 
-    init();
-    //CheckOrSetUDID();
+  useEffect(() => {
+    if (categories?.length > 0 && categoryId) {
+      const selectedCategory = categories.find(cat => cat.id === parseInt(categoryId));
+      setCategory(selectedCategory);
+    }
+  }, [categories, categoryId]);
+
+
+
+  useEffect(() => {
+    CheckOrSetUDID();
     getProducts(); // eslint-disable-next-line
-  }, [page, categoryId, sortKey, prod_search, brand, tagWise, productFoam]);
+  }, [categoryId, sortKey, prod_search, brand, tagWise, productFoam]);
 
 
   async function getProducts(nextPage) {
-    const checkOrSetUDIDInfo = await CheckOrSetUDID();
-    let headers = { visitor: checkOrSetUDIDInfo.visitor_id };
-    if (loginInfo.isLoggedIn === true) {
-      headers = {
-        Authorization: `token ${loginInfo.token}`,
-      };
-    }
     setLoading(true);
     try {
       let params = categoryId
@@ -130,7 +135,7 @@ export default function Shop() {
         params["ordering"] = sortKey.value;
       }
       if (brand !== null) {
-        params.brand = brand.value;
+        params.brand = brand;
       }
       if (tagWise !== null) {
         params.product_tag = tagWise.value;
@@ -138,7 +143,7 @@ export default function Shop() {
       if (productFoam !== null) {
         params.product_foam = productFoam.value;
       }
-      if (prod_search) {
+      if (prod_search !== null) {
         params.prod_search = prod_search;
       }
       const response = await client.get("/web/products/list/", {
@@ -204,22 +209,43 @@ export default function Shop() {
     }
   }
 
-
   useEffect(() => {
+    const filtered = categories.filter((item) => item.id === categoryId);
+    setFilteredData(filtered);
+  }, [data, categoryId]);
 
-    dispatch(fetchFilters());
-    dispatch(fetchCategories());
+  async function handlePageChange(nextPage) {
+    setCurrentPage(nextPage);
+    getProducts(nextPage);
 
-  }, [dispatch]);
+    const params = {
+      page: nextPage,
+    };
 
-  useEffect(() => {
-    if (categories?.length > 0 && categoryId) {
-      const selectedCategory = categories.find(cat => cat.id === parseInt(categoryId));
-      setCategory(selectedCategory);
+    if (categoryId) {
+      params.category = categoryId;
+      params.category_name = category_name;
     }
-  }, [categories, categoryId]);
+    if (searchPar.get("brand")) {
+      params.brand = brand;
+      params.brand_name = brand_name;
+    }
 
-  useEffect(() => {
+    if (prod_search !== null) {
+      params.search = prod_search;
+    }
+
+    setSearchParams(params);
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
+
+  const handleSoryKeyChange = (e) => {
+    setSortKey(e);
     setCurrentPage(1);
     const params = {
       page: 1,
@@ -243,32 +269,61 @@ export default function Shop() {
 
     setSearchParams(params);
 
-  }, [sortKey, tagWise, productFoam]);
+  }
 
+  const handleTagWiseChange = (e) => {
+    setTagWise(e)
+    setCurrentPage(1);
+    const params = {
+      page: 1,
+    };
 
-  async function handlePageChange(nextPage) {
-    setCurrentPage(nextPage);
-    getProducts(nextPage);
     if (categoryId) {
-      setSearchParams({
-        page: nextPage,
-        category: categoryId,
-        category_name: category_name,
-      });
+      params.category = categoryId;
+
+    }
+    if (category_name) {
+      params.category_name = category_name;
     }
     if (searchPar.get("brand")) {
       params.brand = brand;
       params.brand_name = brand_name;
-    } else {
-      setSearchParams({
-        page: nextPage,
-      });
     }
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
+
+    if (prod_search !== null) {
+      params.search = prod_search;
+    }
+
+    setSearchParams(params);
+
+
+  }
+
+  const handleProductFoamChange = (e) => {
+    setProductFoam(e)
+    setCurrentPage(1);
+    const params = {
+      page: 1,
+    };
+
+    if (categoryId) {
+      params.category = categoryId;
+
+    }
+    if (category_name) {
+      params.category_name = category_name;
+    }
+    if (searchPar.get("brand")) {
+      params.brand = brand;
+      params.brand_name = brand_name;
+    }
+
+    if (prod_search !== null) {
+      params.search = prod_search;
+    }
+
+    setSearchParams(params);
+
   }
 
   const handleWishlistChange = async (item, index) => {
@@ -278,6 +333,7 @@ export default function Shop() {
       var elementChange = temp[index];
       elementChange.is_wished = !item.is_wished;
       setProducts(temp);
+      // getProducts();
     }
   };
   const pageUrl = "/shop";
@@ -317,7 +373,11 @@ export default function Shop() {
           align="center"
           mb={6}
         >
-          {brand_name ? brand_name : category_name ? category_name : `All Products`}
+          {brand_name
+            ? brand_name
+            : category_name
+              ? category_name
+              : `All Products`}
         </Heading>
 
         <Flex
@@ -369,7 +429,10 @@ export default function Shop() {
                   value={sortKey}
                   sx={{ padding: "0 10px" }}
                   variant={"outline"}
-                  onChange={(e) => setSortKey(e)}
+                  onChange={(e) => {
+                    handleSoryKeyChange(e);
+
+                  }}
                   placeholder="Select Option"
                   options={[
                     {
@@ -444,7 +507,7 @@ export default function Shop() {
                   value={tagWise}
                   sx={{ padding: "0 10px" }}
                   variant={"outline"}
-                  onChange={(e) => setTagWise(e)}
+                  onChange={(e) => handleTagWiseChange(e)}
                   options={tagsArray}
                 ></Select>
                 <Heading size="sm" my={2} fontFamily={"inter"}>
@@ -476,7 +539,7 @@ export default function Shop() {
                   value={productFoam}
                   sx={{ padding: "0 10px" }}
                   variant={"outline"}
-                  onChange={(e) => setProductFoam(e)}
+                  onChange={(e) => handleProductFoamChange(e)}
                   options={productFoamsArray}
                 ></Select>
               </Box>
@@ -607,35 +670,6 @@ export default function Shop() {
             </Flex>
           )}
         </Flex>
-        {/* )} */}
-        {/* <div itemScope itemType="http://schema.org/Product">
-          <meta itemProp="brand" content="facebook" />
-          <meta itemProp="name" content="Facebook T-Shirt" />
-          <meta
-            itemProp="description"
-            content="Unisex Facebook T-shirt, Small"
-          />
-          <meta itemProp="productID" content="facebook_tshirt_001" />
-          <meta itemProp="url" content="https://example.org/facebook" />
-          <meta itemProp="image" content="https://example.org/facebook.jpg" />
-          <div
-            itemProp="value"
-            itemScope
-            itemType="http://schema.org/PropertyValue"
-          >
-            <span itemProp="propertyID" content="item_group_id" />
-            <meta itemProp="value" content="fb_tshirts" />
-          </div>
-          <div itemProp="offers" itemScope itemType="http://schema.org/Offer">
-            <link itemProp="availability" href="http://schema.org/InStock" />
-            <link
-              itemProp="itemCondition"
-              href="http://schema.org/NewCondition"
-            />
-            <meta itemProp="price" content="7.99" />
-            <meta itemProp="priceCurrency" content="USD" />
-          </div>
-        </div> */}
       </Container>
       <ScrollToTop />
       <Footer />

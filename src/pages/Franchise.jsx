@@ -14,6 +14,7 @@ import BreadCrumbCom from "../components/BreadCrumbCom";
 import ScrollToTop from "../components/ScrollToTop";
 import { useLocation } from "react-router-dom";
 import MetaTags from "../context/MetaTagsContext";
+import useScrollRestoration from "../utils/useScrollRestoration";
 
 
 export default function Franchise() {
@@ -21,6 +22,7 @@ export default function Franchise() {
   const searchParams = new URLSearchParams(search);
   const IsMobileView = searchParams.get("mobile") ?? "false";
   const pageUrl = "/franchise";
+  useScrollRestoration();
 
   return (
     <>

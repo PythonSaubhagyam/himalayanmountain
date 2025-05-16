@@ -20,12 +20,12 @@ const Aboutus = () => {
         <BreadCrumbCom second={"About Us"} secondUrl={"/about-us"} />{" "}
       </Container>
       <Container maxW={"container.xl"} mb={4} px={0} centerContent>
-        <Image src={require("../assets/aboutus/about-us.jpg")} />
+        <Image src="https://forntend-bucket.s3.ap-south-1.amazonaws.com/sose/images/aboutUs.jpg" />
         <VStack>
           <Image
             my={7}
             w={"45%"}
-            src={require("../assets/aboutus/2 raw.png")}
+            src={"https://forntend-bucket.s3.ap-south-1.amazonaws.com/sose/images/2 raw.png"}
           />
           <Box
             fontWeight={"600"}
@@ -36,6 +36,17 @@ const Aboutus = () => {
           >
             Our Mission & Vision
           </Box>
+
+
+
+{/* ￼
+IT- Raj
+(4:19 PM) s3://forntend-bucket/sose/images/2 raw.png
+
+
+
+(4:19 PM) s3://forntend-bucket/sose/images/how to precroes tea.jpg */}
+
 
           <Box maxW={"6xl"} color={"text.300"} textAlign={"justify"} px={{ base: 9 }}>
             When you buy this blend , you also support ethical farming
@@ -91,37 +102,8 @@ const Aboutus = () => {
             How Is Himalayan Mountain Tea Produced?
           </Box>
 
-          <Image src={require("../assets/aboutus/how to precroes tea.jpg")} w={"70%"} />
-          <Box
-            w="100%"
-
-            backgroundSize="100%"
-            backgroundPosition="50% 100%"
-            backgroundRepeat={"no-repeat"}
-          >
-            <Heading
-              color="brand.500"
-              size="lg"
-              mx="auto"
-              align={"center"}
-              my={"5"}
-              pb={"10px"}
-            >
-              AVAILABLE AT
-            </Heading>
-          </Box>
-
-          <Image
-            src={
-              require("../assets/001.jpg")
-            }
-
-            alt=""
-            style={{
-              opacity: 1,
-              transition: "opacity 0.7s", // Note the corrected syntax here
-            }}
-          />
+          <Image src={"https://forntend-bucket.s3.ap-south-1.amazonaws.com/sose/images/how to precroes tea.jpg"}  />
+         
         </VStack>
 
 

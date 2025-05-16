@@ -14,6 +14,7 @@ import BreadCrumbCom from "../components/BreadCrumbCom";
 import { useLocation } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
 import MetaTags from "../context/MetaTagsContext";
+import useScrollRestoration from "../utils/useScrollRestoration";
 
 
 export default function TermsAndConditions() {
@@ -21,6 +22,7 @@ export default function TermsAndConditions() {
   const searchParams = new URLSearchParams(search);
   const IsMobileView = searchParams.get("mobile") ?? "false";
   const pageUrl = "/terms-and-conditions";
+  useScrollRestoration();
 
   return (
     <>

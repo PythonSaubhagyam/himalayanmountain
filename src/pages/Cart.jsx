@@ -41,6 +41,7 @@ import checkLogin from "../utils/checkLogin";
 import BreadCrumbCom from "../components/BreadCrumbCom";
 import LoginModal from "../components/LoginModal"
 import MetaTags from "../context/MetaTagsContext";
+import useScrollRestoration from "../utils/useScrollRestoration";
 
 export default function Cart() {
   const messageRef = useRef(null);
@@ -64,6 +65,7 @@ export default function Cart() {
   const navigate = useNavigate();
   const toast = useToast();
   const [isMobile] = useMediaQuery("(max-width: 768px)");
+  useScrollRestoration();
 
   const loginInfo = checkLogin();
 

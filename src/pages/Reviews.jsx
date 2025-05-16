@@ -21,6 +21,7 @@ import ReactStars from "react-stars";
 import client from "../setup/axiosClient";
 import ScrollToTop from "../components/ScrollToTop";
 import MetaTags from "../context/MetaTagsContext";
+import useScrollRestoration from "../utils/useScrollRestoration";
 
 export default function Reviews() {
   const initialProductData = Object.freeze({
@@ -34,6 +35,7 @@ export default function Reviews() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const { productId } = useParams();
+  useScrollRestoration();
 
   useEffect(() => {
     getReviews();

@@ -13,12 +13,15 @@ import { useLocation } from "react-router-dom";
 import BreadCrumbCom from "../components/BreadCrumbCom";
 import ScrollToTop from "../components/ScrollToTop";
 import MetaTags from "../context/MetaTagsContext";
+import useScrollRestoration from "../utils/useScrollRestoration";
+
 
 export default function ShippingPolicy() {
   let { search } = useLocation();
   const searchParams = new URLSearchParams(search);
   const IsMobileView = searchParams.get("mobile") ?? "false";
   const pageUrl = "/shipping-policy";
+  useScrollRestoration();
 
   return (
     <>
